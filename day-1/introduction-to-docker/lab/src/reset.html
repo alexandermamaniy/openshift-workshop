@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reset IBMeetingU Data</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #7e8ba3 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .reset-container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+
+        h1 {
+            color: #1e3c72;
+            margin-bottom: 20px;
+            font-size: 28px;
+        }
+
+        p {
+            color: #666;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .data-info {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            text-align: left;
+        }
+
+        .data-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .data-item:last-child {
+            border-bottom: none;
+        }
+
+        .data-label {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .data-value {
+            color: #666;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        button {
+            padding: 14px 28px;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .reset-btn {
+            background: #FF6B6B;
+            color: white;
+        }
+
+        .reset-btn:hover {
+            background: #ff5252;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+        }
+
+        .cancel-btn {
+            background: #e0e0e0;
+            color: #333;
+        }
+
+        .cancel-btn:hover {
+            background: #d0d0d0;
+            transform: translateY(-2px);
+        }
+
+        .success-message {
+            background: #4CAF50;
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="reset-container">
+        <div class="icon">🔄</div>
+        <h1>Reset IBMeetingU Data</h1>
+        <p>This will clear all your stored data including profile, matches, and messages.</p>
+
+        <div class="data-info" id="dataInfo">
+            <div class="data-item">
+                <span class="data-label">Profile:</span>
+                <span class="data-value" id="profileStatus">Loading...</span>
+            </div>
+            <div class="data-item">
+                <span class="data-label">Matches:</span>
+                <span class="data-value" id="matchesStatus">Loading...</span>
+            </div>
+            <div class="data-item">
+                <span class="data-label">Messages:</span>
+                <span class="data-value" id="messagesStatus">Loading...</span>
+            </div>
+        </div>
+
+        <div class="button-group">
+            <button class="cancel-btn" onclick="window.location.href='index.html'">Cancel</button>
+            <button class="reset-btn" onclick="resetData()">Reset All Data</button>
+        </div>
+
+        <div class="success-message" id="successMessage">
+            ✅ All data has been reset successfully!
+        </div>
+    </div>
+
+    <script>
+        // Check current data on load
+        window.addEventListener('DOMContentLoaded', () => {
+            updateDataStatus();
+        });
+
+        function updateDataStatus() {
+            const userProfile = localStorage.getItem('userProfile');
+            const matches = localStorage.getItem('matches');
+            const messages = localStorage.getItem('messages');
+
+            document.getElementById('profileStatus').textContent = userProfile ? 'Exists' : 'None';
+            document.getElementById('matchesStatus').textContent = matches ? 
+                `${JSON.parse(matches).length} matches` : 'None';
+            
+            const messageCount = messages ? Object.keys(JSON.parse(messages)).length : 0;
+            document.getElementById('messagesStatus').textContent = messageCount > 0 ? 
+                `${messageCount} conversations` : 'None';
+        }
+
+        function resetData() {
+            if (confirm('Are you sure you want to reset all data? This cannot be undone.')) {
+                // Clear all localStorage data
+                localStorage.removeItem('userProfile');
+                localStorage.removeItem('matches');
+                localStorage.removeItem('messages');
+
+                // Update status
+                updateDataStatus();
+
+                // Show success message
+                const successMessage = document.getElementById('successMessage');
+                successMessage.style.display = 'block';
+
+                // Redirect after 2 seconds
+                setTimeout(() => {
+                    window.location.href = 'onboarding.html';
+                }, 2000);
+            }
+        }
+    </script>
+</body>
+</html>
