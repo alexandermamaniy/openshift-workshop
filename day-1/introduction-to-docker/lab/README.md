@@ -1,46 +1,46 @@
-# Instrucciones Docker - IBMeetingU
+# Docker Instructions - IBMeetingU
 
-## Construir la imagen
+## Build the image
 
 ```bash
-cd day-1/topic-1/lab
+cd day-1/introduction-to-docker/lab
 docker build -t ibmeetingu:latest .
 ```
 
-## Ejecutar el contenedor
+## Run the container
 
 ```bash
 docker run -d -p 8080:80 --name ibmeetingu ibmeetingu:latest
 ```
 
-## Acceder a la aplicación
+## Access the application
 
-Abre tu navegador en: http://localhost:8080
+Open your browser at: http://localhost:8080
 
-## Comandos útiles
+## Useful commands
 
-### Ver logs del contenedor
+### View container logs
 ```bash
 docker logs ibmeetingu
 ```
 
-### Detener el contenedor
+### Stop the container
 ```bash
 docker stop ibmeetingu
 ```
 
-### Eliminar el contenedor
+### Remove the container
 ```bash
 docker rm ibmeetingu
 ```
 
-### Eliminar la imagen
+### Remove the image
 ```bash
 docker rmi ibmeetingu:latest
 ```
 
-## Notas
+## Notes
 
-- La aplicación se sirve en el puerto 80 dentro del contenedor
-- Se mapea al puerto 8080 en tu máquina local
-- Usa nginx:alpine como base (imagen ligera)
+- The application is served on port 80 inside the container
+- It's mapped to port 8080 on your local machine
+- Uses nginx:alpine as base (lightweight image)
