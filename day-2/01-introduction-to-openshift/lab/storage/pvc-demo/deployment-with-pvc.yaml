@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pvc-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pvc-app
+  template:
+    metadata:
+      labels:
+        app: pvc-app
+    spec:
+      containers:
+        - name: web
+          image: registry.access.redhat.com/ubi9/ubi-minimal
+          command: ["/bin/bash", "-c", "--"]
+          args: ["while true; do echo \"loop\" ; done"]
+          volumeMounts:
+            - name: data
+              mountPath: /data
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: demo-pvc
