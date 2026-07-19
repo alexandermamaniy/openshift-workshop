@@ -54,7 +54,7 @@ The final image runs as `USER node` (non-root) on port `8080`.
 
 ## Deploy to OpenShift internal registry
 
-Replace `<username>` with your assigned username (e.g. `user-1`).
+Replace `<username>` with your assigned username
 
 ```bash
 export REGISTRY=default-route-openshift-image-registry.apps.rosa.ibm-rh-workshop.bern.p3.openshiftapps.com

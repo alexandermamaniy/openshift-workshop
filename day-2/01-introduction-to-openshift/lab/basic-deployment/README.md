@@ -11,7 +11,7 @@ You will also expose the app via a secure HTTPS Route.
 Make sure you are in the lab directory before running any command:
 
 ```bash
-cd day-2/introduction-to-openshift/lab/basic-deployment/deployment/
+cd day-2/01-introduction-to-openshift/lab/basic-deployment/deployment/
 ```
 
 ---
@@ -38,13 +38,13 @@ oc login --token=<your-api-token> --server=https://<server.cluster.domain>:443
 
 ## 2. Create your project
 
-Each user gets their own isolated namespace. Replace `user-1` with your assigned username (e.g. `user-1`):
+Each user gets their own isolated namespace. Replace `<username>` with your assigned username (e.g. `<username>`):
 
 ```bash
-oc new-project user-1-demo-app
+oc new-project <username>-demo-app
 ```
 
-> 💡 All subsequent commands use `-n user-1-demo-app` to target your namespace.
+> 💡 All subsequent commands use `-n <username>-demo-app` to target your namespace.
 
 ---
 
@@ -56,30 +56,30 @@ Use this approach to understand what each resource does individually.
 
 ```bash
 # 1. Create a Deployment and Service from the container image
-oc new-app quay.io/openshift/origin-hello-openshift --name=hello-openshift -n user-1-demo-app
+oc new-app quay.io/openshift/origin-hello-openshift --name=hello-openshift -n <username>-demo-app
 
 # 2. Wait for the pod to be Running
-oc get pods -n user-1-demo-app
+oc get pods -n <username>-demo-app
 
 # 3. Expose the Service as an HTTP Route
-oc expose service hello-openshift -n user-1-demo-app
+oc expose service hello-openshift -n <username>-demo-app
 
 # 4. Enable HTTPS and redirect HTTP → HTTPS
-oc patch route hello-openshift -n user-1-demo-app \
+oc patch route hello-openshift -n <username>-demo-app \
   --type=merge \
   -p '{"spec":{"tls":{"termination":"edge","insecureEdgeTerminationPolicy":"Redirect"}}}'
 
 # 5. Verify the Service and Route were created
-oc get svc,route -n user-1-demo-app
+oc get svc,route -n <username>-demo-app
 
 # 6. (Optional) Inspect the Deployment details
-oc describe deployment/hello-openshift -n user-1-demo-app
+oc describe deployment/hello-openshift -n <username>-demo-app
 ```
 
 **Clean up** when you are done with this section:
 
 ```bash
-oc delete route,service,deployment hello-openshift -n user-1-demo-app
+oc delete route,service,deployment hello-openshift -n <username>-demo-app
 ```
 
 ---
@@ -97,16 +97,16 @@ The following files are already provided in the `deployment/` directory:
 
 ```bash
 # Apply all manifests in the current directory
-oc apply -f . -n user-1-demo-app
+oc apply -f . -n <username>-demo-app
 
 # Verify everything is running
-oc get pods,svc,route -n user-1-demo-app
+oc get pods,svc,route -n <username>-demo-app
 ```
 
 **Clean up** when you are done:
 
 ```bash
-oc delete -f . -n user-1-demo-app
+oc delete -f . -n <username>-demo-app
 ```
 
 ---
@@ -209,13 +209,13 @@ Navigate to **Home → Projects**, find `<username>-demo-app`, click the three-d
 Get the Route URL and open it in your browser:
 
 ```bash
-oc get route hello-openshift -n user-1-demo-app
+oc get route hello-openshift -n <username>-demo-app
 ```
 
 The app will be available at:
 
 ```
-https://hello-openshift-user-1-demo-app.apps.<cluster-domain>
+https://hello-openshift-<username>-demo-app.apps.<cluster-domain>
 ```
 
 > 🔒 HTTP requests are automatically redirected to HTTPS.
