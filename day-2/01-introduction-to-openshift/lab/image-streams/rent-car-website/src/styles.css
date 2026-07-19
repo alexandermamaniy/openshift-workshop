@@ -1,0 +1,381 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --red: #e8372a;
+  --dark: #1a1a1a;
+  --muted: #666;
+  --light-pink: #fdecea;
+}
+
+body {
+  font-family: -apple-system, "Segoe UI", system-ui, sans-serif;
+  color: var(--dark);
+  background: #fff;
+  overflow-x: hidden;
+}
+
+/* ── TOPBAR ── */
+.topbar {
+  background: var(--dark);
+  color: #ccc;
+  font-size: 13px;
+  padding: 8px 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.topbar-left {
+  display: flex;
+  gap: 28px;
+}
+
+.topbar-right {
+  display: flex;
+  gap: 14px;
+}
+
+.topbar-right a {
+  color: #ccc;
+  text-decoration: none;
+  font-size: 13px;
+}
+
+.topbar-right a:hover { color: var(--red); }
+
+/* ── NAV ── */
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 60px;
+  background: #fff;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--dark);
+  letter-spacing: -0.5px;
+}
+
+.logo-icon svg {
+  width: 40px;
+  height: 40px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 36px;
+  list-style: none;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #444;
+  font-size: 15px;
+  font-weight: 500;
+  transition: color .2s;
+}
+
+.nav-links a:hover,
+.nav-links a.active { color: var(--dark); font-weight: 700; }
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.btn-search {
+  background: var(--red);
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 16px;
+  cursor: pointer;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-menu-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 4px;
+}
+
+.nav-menu-btn span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--dark);
+  border-radius: 2px;
+}
+
+/* ── HERO ── */
+.hero {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 60px 60px 40px;
+  min-height: 520px;
+  overflow: hidden;
+}
+
+.hero-bg-text {
+  position: absolute;
+  left: -20px;
+  top: 40px;
+  font-size: 140px;
+  font-weight: 900;
+  color: rgba(232, 55, 42, 0.07);
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+}
+
+.hero-left {
+  flex: 1;
+  max-width: 540px;
+  position: relative;
+  z-index: 1;
+}
+
+.hero-tag {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--red);
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.tag-line {
+  display: inline-block;
+  width: 32px;
+  height: 2px;
+  background: var(--red);
+}
+
+.hero-left h1 {
+  font-size: 52px;
+  font-weight: 900;
+  line-height: 1.1;
+  color: var(--dark);
+  margin-bottom: 20px;
+  letter-spacing: -1px;
+}
+
+.hero-desc {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.8;
+  margin-bottom: 32px;
+  max-width: 460px;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 16px;
+}
+
+.btn-primary {
+  background: var(--red);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 14px 28px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background .2s;
+}
+
+.btn-primary:hover { background: #c9291e; }
+
+.btn-outline {
+  background: #fff;
+  color: var(--red);
+  border: 2px solid var(--red);
+  border-radius: 6px;
+  padding: 12px 28px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background .2s, color .2s;
+}
+
+.btn-outline:hover { background: var(--red); color: #fff; }
+
+/* ── HERO RIGHT ── */
+.hero-right {
+  flex: 0 0 480px;
+  position: relative;
+  height: 400px;
+  z-index: 1;
+}
+
+.hero-circle {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 420px;
+  height: 420px;
+  border-radius: 50%;
+  background: var(--light-pink);
+  z-index: 0;
+}
+
+.hero-car {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 180px;
+  z-index: 1;
+  filter: drop-shadow(0 8px 24px rgba(0,0,0,.15));
+}
+
+/* ── BOOKING BAR ── */
+.booking-bar {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 30px rgba(0,0,0,.10);
+  padding: 20px 28px;
+  margin: 0 60px 60px;
+  gap: 0;
+}
+
+.booking-field {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  padding: 0 20px;
+}
+
+.booking-icon { font-size: 18px; }
+
+.booking-field select {
+  border: none;
+  outline: none;
+  font-size: 14px;
+  color: #555;
+  background: transparent;
+  cursor: pointer;
+  width: 100%;
+}
+
+.booking-divider {
+  width: 1px;
+  height: 40px;
+  background: #e5e5e5;
+}
+
+.booking-btn { margin-left: 24px; border-radius: 8px; }
+
+/* ── BRANDS ── */
+.brands {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 60px;
+  padding: 40px 60px;
+  border-top: 1px solid #f0f0f0;
+  border-bottom: 1px solid #f0f0f0;
+  flex-wrap: wrap;
+}
+
+.brand {
+  font-size: 18px;
+  font-weight: 700;
+  color: #aaa;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  letter-spacing: 0.5px;
+}
+
+.brand small {
+  font-size: 10px;
+  display: block;
+  line-height: 1;
+  letter-spacing: 1px;
+}
+
+/* ── HOW IT WORKS ── */
+.how-it-works {
+  padding: 80px 60px;
+  text-align: center;
+}
+
+.section-tag {
+  color: var(--red);
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  letter-spacing: 0.5px;
+}
+
+.how-it-works h2 {
+  font-size: 40px;
+  font-weight: 900;
+  margin-bottom: 60px;
+  letter-spacing: -0.5px;
+}
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.step {
+  padding: 32px 24px;
+  border-radius: 12px;
+  background: #fafafa;
+  border: 1px solid #f0f0f0;
+}
+
+.step-icon {
+  font-size: 40px;
+  margin-bottom: 16px;
+}
+
+.step h3 {
+  font-size: 18px;
+  font-weight: 800;
+  margin-bottom: 10px;
+}
+
+.step p {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.7;
+}
+

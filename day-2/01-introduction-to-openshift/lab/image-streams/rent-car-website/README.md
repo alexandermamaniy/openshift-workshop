@@ -1,6 +1,6 @@
-# Petcare — Veterinary & Medical Care Website
+# Satos — Rent-a-Car Website
 
-A static landing page for a pet care clinic, served with **Node.js + Express** inside a Docker container.
+A landing page for a car rental service, served with **Node.js + Express** inside a Docker container.
 
 ---
 
@@ -14,7 +14,7 @@ A static landing page for a pet care clinic, served with **Node.js + Express** i
 └── src/
     ├── index.html   # Main page
     ├── styles.css   # All styles
-    └── main.js      # Client-side JS (nav toggle, play button)
+    └── main.js      # Client-side JS (nav toggle, booking buttons)
 ```
 
 ---
@@ -30,25 +30,37 @@ A static landing page for a pet care clinic, served with **Node.js + Express** i
 
 ```bash
 # Build the image
-docker build -t petcare-app:latest .
+docker build -t rent-car-app:latest .
 
 # Run the container
-docker run -p 8080:8080 petcare-app:latest
+docker run -p 8080:8080 rent-car-app:latest
 ```
 
 Open in your browser: [http://localhost:8080](http://localhost:8080)
 
+---
+
+## How the Dockerfile works
+
+The build uses a **multi-stage** approach — no Node.js required on the host:
+
+| Stage | Base image | Purpose |
+|---|---|---|
+| `builder` | `node:20-alpine` | Installs npm dependencies |
+| `runtime` | `node:20-alpine` | Copies only `node_modules` + app code |
+
+The final image runs as `USER node` (non-root) on port `8080`.
 
 ---
 
 ## Deploy to OpenShift internal registry
 
-Replace `<username>` with your assigned username.
+Replace `<username>` with your assigned username (e.g. `user-1`).
 
 ```bash
 export REGISTRY=default-route-openshift-image-registry.apps.rosa.ibm-rh-workshop.bern.p3.openshiftapps.com
 export NAMESPACE=<username>-workshop
-export IMAGE=petcare-app
+export IMAGE=rent-car-app
 ```
 
 ### Step 1 — Log in to the cluster
@@ -81,7 +93,7 @@ docker login -u $(oc whoami) -p $(oc whoami --show-token) ${REGISTRY}
 
 ### Step 5 — Create the ImageStream
 
-> It is equired before pushing — the push will fail with `500 Internal Server Error` without this.
+> Required before pushing — the push will fail with `500 Internal Server Error` without this.
 
 ```bash
 oc create imagestream ${IMAGE} -n ${NAMESPACE}
