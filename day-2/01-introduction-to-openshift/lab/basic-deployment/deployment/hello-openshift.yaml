@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-openshift
+  labels:
+    app: hello-openshift
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: hello-openshift
+  template:
+    metadata:
+      labels:
+        app: hello-openshift
+    spec:
+      containers:
+        - name: web
+          image: quay.io/openshift/origin-hello-openshift:latest
+          ports:
+            - containerPort: 8080
