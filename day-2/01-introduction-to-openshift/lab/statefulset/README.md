@@ -126,7 +126,7 @@ oc -n $NAMESPACE rsh demo-db-0
 Connect to PostgreSQL:
 
 ```bash
-psql -U demo -d demodb
+psql -U workshop -d workshopdb
 ```
 
 Create a `person` table and insert a record:
@@ -165,7 +165,7 @@ exit
 
 ### 6. Scale down to 0 and back up to 1
 
-Scale the StatefulSet to 0 — the pod is deleted:
+Scale the StatefulSet to 0, the pod is deleted:
 
 ```bash
 oc scale statefulset demo-db --replicas=0 -n $NAMESPACE
@@ -174,7 +174,7 @@ oc scale statefulset demo-db --replicas=0 -n $NAMESPACE
 oc get pods -n $NAMESPACE
 ```
 
-Scale back up to 1 — a new pod is created and the same PVC is re-attached:
+Scale back up to 1, a new pod is created and the same PVC is re-attached:
 
 ```bash
 oc scale statefulset demo-db --replicas=1 -n $NAMESPACE
@@ -196,7 +196,7 @@ oc -n $NAMESPACE rsh demo-db-0
 Connect and query the table:
 
 ```bash
-psql -U demo -d demodb
+psql -U workshop -d workshopdb
 ```
 
 ```sql

@@ -19,14 +19,28 @@ spec:
         ports:
         - containerPort: 5432
         env:
+        # Sensitive values, loaded from Secret
         - name: POSTGRES_USER
-          value: workshop
+          valueFrom:
+            secretKeyRef:
+              name: demo-db-secret
+              key: POSTGRES_USER
         - name: POSTGRES_PASSWORD
-          value: workshop123
+          valueFrom:
+            secretKeyRef:
+              name: demo-db-secret
+              key: POSTGRES_PASSWORD
+        # Non-sensitive config, loaded from ConfigMap
         - name: POSTGRES_DB
-          value: workshopdb
+          valueFrom:
+            configMapKeyRef:
+              name: demo-db-config
+              key: POSTGRES_DB
         - name: PGDATA
-          value: /var/lib/postgresql/data/pgdata
+          valueFrom:
+            configMapKeyRef:
+              name: demo-db-config
+              key: PGDATA
         volumeMounts:
         - name: data
           mountPath: /var/lib/postgresql/data
