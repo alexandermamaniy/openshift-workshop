@@ -229,7 +229,7 @@ https://aka.ms/wsl2kernel
 
 ## Useful Links
 
-- [Docker Desktop for Windows — Official Docs](https://docs.docker.com/desktop/setup/install/windows-install/)
-- [Docker Desktop for macOS — Official Docs](https://docs.docker.com/desktop/setup/install/mac-install/)
+- [Docker Desktop for Windows, Official Docs](https://docs.docker.com/desktop/setup/install/windows-install/)
+- [Docker Desktop for macOS, Official Docs](https://docs.docker.com/desktop/setup/install/mac-install/)
 - [WSL 2 Installation Guide (Microsoft)](https://learn.microsoft.com/en-us/windows/wsl/install)
 - [Docker Hub](https://hub.docker.com/)
