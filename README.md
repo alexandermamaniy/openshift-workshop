@@ -154,7 +154,7 @@ An introduction to IBM products on OpenShift and AI/ML capabilities available on
 | # | Topic | Slides | Lab |
 |---|-------|--------|-----|
 | 01 | IBM Products on OpenShift | [slide.pdf](./day-3/Introduction%20to%20OpenShift%20AI.pdf) | — |
-| 02 | Container Options in IBM | [slide.pdf](./day-3/Introduction%20to%20OpenShift%20AI.pdf) | — |
+| 02 | AI Containers on IBM Z | [slide.pdf](./day-3/AI-containers-IBM.pdf) | — |
 | 03 | Introduction to OpenShift AI | [slide.pdf](./day-3/Introduction%20to%20OpenShift%20AI.pdf) | — |
 | 04 | RAG with OGX (Open GenAI Stack) | [slide.pdf](./day-3/Introduction%20to%20OpenShift%20AI.pdf) | — |
 
@@ -169,7 +169,7 @@ Explore the IBM product portfolio running natively on OpenShift.
 
 ---
 
-**02 — Container Options in IBM**
+**02 — AI Containers on IBM Z**
 Overview of container deployment options available within the IBM ecosystem.
 
 - zCX (Docker and OpenShift)
