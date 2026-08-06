@@ -1,6 +1,6 @@
-# Pre-Setup Guide: Installing Docker Desktop
+# Pre-Setup Guide: Installing Docker
 
-This guide covers the installation of Docker Desktop on **Windows** and **macOS** before the workshop begins.
+This guide covers the installation of Docker on **Windows**, **macOS**, and **Fedora Linux** before the workshop begins.
 
 ---
 
@@ -9,8 +9,10 @@ This guide covers the installation of Docker Desktop on **Windows** and **macOS*
 - [System Requirements](#system-requirements)
   - [Windows](#windows-requirements)
   - [macOS](#macos-requirements)
+  - [Fedora](#fedora-requirements)
 - [Installing Docker Desktop on Windows](#installing-docker-desktop-on-windows)
 - [Installing Docker Desktop on macOS](#installing-docker-desktop-on-macos)
+- [Installing Docker Engine on Fedora](#installing-docker-engine-on-fedora)
 - [Post-Installation: Verify the Installation](#post-installation-verify-the-installation)
 - [Troubleshooting](#troubleshooting)
 
@@ -41,6 +43,15 @@ This guide covers the installation of Docker Desktop on **Windows** and **macOS*
 | Disk Space | 2.5 GB for Docker Desktop installation |
 
 > **Note:** Docker Desktop provides separate installers for **Apple silicon** and **Intel** chips. Make sure to download the correct one for your Mac.
+
+### Fedora Requirements
+
+| Component | Minimum Requirement |
+|-----------|---------------------|
+| OS | Fedora 43 or later (64-bit) |
+| RAM | 2 GB minimum |
+| CPU | 64-bit processor |
+| Kernel | 3.10 or later (`uname -r` to check) |
 
 ---
 
@@ -142,9 +153,79 @@ If macOS blocks Docker Desktop from opening:
 
 ---
 
+## Installing Docker Engine on Fedora
+
+On Fedora, Docker runs as a system service (Docker Engine) rather than a desktop application.
+
+### Step 1 — Remove Conflicting Packages
+
+Remove any older or conflicting Docker-related packages that may be pre-installed:
+
+```bash
+sudo dnf remove -y docker \
+  docker-client \
+  docker-client-latest \
+  docker-common \
+  docker-latest \
+  docker-latest-logrotate \
+  docker-logrotate \
+  docker-selinux \
+  docker-engine-selinux \
+  docker-engine
+```
+
+### Step 2 — Set Up the Docker Repository
+
+Install the `dnf-plugins-core` package and add the official Docker repository:
+
+```bash
+sudo dnf install -y dnf-plugins-core
+
+sudo dnf config-manager --add-repo \
+  https://download.docker.com/linux/fedora/docker-ce.repo
+```
+
+### Step 3 — Install Docker Engine
+
+```bash
+sudo dnf install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+```
+
+### Step 4 — Start and Enable the Docker Service
+
+```bash
+sudo systemctl start docker
+sudo systemctl enable docker
+```
+
+Verify the service is running:
+
+```bash
+sudo systemctl status docker
+```
+
+### Step 5 — Add Your User to the `docker` Group
+
+This allows you to run Docker commands without `sudo`:
+
+```bash
+sudo usermod -aG docker $USER
+```
+
+> **Important:** Log out and log back in (or run `newgrp docker`) for the group change to take effect.
+
+### Step 6 — Verify the Installation
+
+```bash
+docker --version
+docker run hello-world
+```
+
+---
+
 ## Post-Installation: Verify the Installation
 
-Once Docker Desktop is running, open a terminal (PowerShell on Windows, Terminal on macOS) and run the following commands to confirm Docker is correctly installed.
+Once Docker is running, open a terminal and run the following commands to confirm Docker is correctly installed.
 
 **Check Docker version:**
 
@@ -183,11 +264,34 @@ Expected output:
 Docker Compose version v2.x.x
 ```
 
-If all three commands succeed, Docker Desktop is correctly installed and ready to use.
+If all three commands succeed, Docker is correctly installed and ready to use.
 
 ---
 
 ## Troubleshooting
+
+### Fedora — Permission denied when running `docker`
+
+**Symptom:** `permission denied while trying to connect to the Docker daemon socket`
+
+**Fix:** Add your user to the `docker` group and re-login:
+
+```bash
+sudo usermod -aG docker $USER
+newgrp docker
+```
+
+### Fedora — `docker.service` fails to start
+
+**Symptom:** `systemctl status docker` shows a failed state.
+
+**Fix:** Check for conflicts with `podman` or `cri-o`:
+
+```bash
+sudo dnf remove -y podman-docker
+sudo systemctl daemon-reload
+sudo systemctl start docker
+```
 
 ### Windows — Virtualization not enabled
 
@@ -229,7 +333,8 @@ https://aka.ms/wsl2kernel
 
 ## Useful Links
 
-- [Docker Desktop for Windows, Official Docs](https://docs.docker.com/desktop/setup/install/windows-install/)
-- [Docker Desktop for macOS, Official Docs](https://docs.docker.com/desktop/setup/install/mac-install/)
+- [Docker Desktop for Windows — Official Docs](https://docs.docker.com/desktop/setup/install/windows-install/)
+- [Docker Desktop for macOS — Official Docs](https://docs.docker.com/desktop/setup/install/mac-install/)
+- [Docker Engine on Fedora — Official Docs](https://docs.docker.com/engine/install/fedora/)
 - [WSL 2 Installation Guide (Microsoft)](https://learn.microsoft.com/en-us/windows/wsl/install)
 - [Docker Hub](https://hub.docker.com/)

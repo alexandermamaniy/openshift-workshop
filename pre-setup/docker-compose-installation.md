@@ -1,6 +1,6 @@
 # Docker Compose Installation Guide
 
-This guide covers how to install **Docker Compose V2** as a standalone CLI plugin on **Windows** and **macOS**.
+This guide covers how to install **Docker Compose V2** as a standalone CLI plugin on **Windows**, **macOS**, and **Fedora Linux**.
 
 > **Prerequisites:** Docker must already be installed on your machine. If you haven't installed Docker yet, follow the [Docker installation guide](./docker-installation.md) first.
 
@@ -11,6 +11,7 @@ This guide covers how to install **Docker Compose V2** as a standalone CLI plugi
 - [What is Docker Compose?](#what-is-docker-compose)
 - [Installing on Windows](#installing-on-windows)
 - [Installing on macOS](#installing-on-macos)
+- [Installing on Fedora](#installing-on-fedora)
 - [Verify the Installation](#verify-the-installation)
 - [Quick Usage Example](#quick-usage-example)
 - [Troubleshooting](#troubleshooting)
@@ -112,9 +113,48 @@ chmod +x ~/.docker/cli-plugins/docker-compose
 
 ---
 
+## Installing on Fedora
+
+On Fedora, Docker Compose V2 is available as a **`docker-compose-plugin`** package through the official Docker repository, or as a standalone binary.
+
+### Option A — Install via DNF (Recommended)
+
+If you installed Docker Engine following the [Docker installation guide](./docker-installation.md), the `docker-compose-plugin` package is available from the same Docker repository:
+
+```bash
+sudo dnf install -y docker-compose-plugin
+```
+
+That's all — no extra symlinks or PATH configuration needed.
+
+### Option B — Install as a Standalone Binary
+
+#### Step 1 — Create the CLI Plugins Directory
+
+```bash
+mkdir -p ~/.docker/cli-plugins
+```
+
+#### Step 2 — Download the Docker Compose Binary
+
+```bash
+curl -SL "https://github.com/docker/compose/releases/latest/download/docker-compose-linux-x86_64" \
+  -o ~/.docker/cli-plugins/docker-compose
+```
+
+> **Note:** For ARM64 machines replace `x86_64` with `aarch64` in the URL above.
+
+#### Step 3 — Make the Binary Executable
+
+```bash
+chmod +x ~/.docker/cli-plugins/docker-compose
+```
+
+---
+
 ## Verify the Installation
 
-Run the following command in your terminal (PowerShell on Windows, Terminal on macOS):
+Run the following command in your terminal (PowerShell on Windows, Terminal on macOS/Fedora):
 
 ```bash
 docker compose version
@@ -153,7 +193,7 @@ Clean up:
 docker compose down
 ```
 
-If all steps succeed, Docker Compose is correctly installed and ready to use. ✅
+If all steps succeed, Docker Compose is correctly installed and ready to use.
 
 ---
 
@@ -238,6 +278,20 @@ Invoke-WebRequest `
 
 ---
 
+### Fedora — `docker compose` command not found after DNF install
+
+**Symptom:** `docker compose version` returns `unknown command "compose"` even after installing the plugin.
+
+**Fix:** Confirm the plugin package is installed and the Docker service is running:
+
+```bash
+rpm -q docker-compose-plugin
+sudo systemctl start docker
+docker compose version
+```
+
+---
+
 ### `docker compose` works in PowerShell but not in WSL 2
 
 **Fix:**
@@ -251,5 +305,6 @@ Invoke-WebRequest `
 
 - [Docker Compose Overview](https://docs.docker.com/compose/)
 - [Docker Compose GitHub Releases](https://github.com/docker/compose/releases)
+- [Docker Compose on Fedora — Official Docs](https://docs.docker.com/engine/install/fedora/)
 - [Compose File Reference](https://docs.docker.com/compose/compose-file/)
 - [Docker Compose CLI Reference](https://docs.docker.com/compose/reference/)
