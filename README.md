@@ -58,7 +58,7 @@ Covers core OpenShift concepts through a series of progressive hands-on labs.
 | 02 | OpenShift Deployments | [slide.pdf](./day-2/02-openshift-deployments/slide.pdf) | [Lab →](./day-2/02-openshift-deployments/labs/) |
 | 03 | OpenShift Storage | [slide.pdf](./day-2/03-openshift-storage/slide.pdf) | [Lab →](./day-2/03-openshift-storage/labs/storage/README.md) |
 | 04 | Horizontal Pod Autoscaler | [slide.pdf](./day-2/04-horizontal-pod-autoscaler/slide.pdf) | [Lab →](./day-2/04-horizontal-pod-autoscaler/labs/README.md) |
-| 05 | CI/CD with OpenShift Pipelines | [slide.pdf](./day-2/05-CI-CD-with-openshift-pipelines/slide.pdf) | — |
+| 05 | CI/CD with OpenShift Pipelines | [slide.pdf](./day-2/05-CI-CD-with-openshift-pipelines/slide.pdf) | [Lab →](https://gitlab.com/alexandermamaniy/openshift-demo) |
 
 ### Lab Summaries
 
@@ -104,7 +104,10 @@ Configure automatic scaling based on CPU utilization and observe the HPA react i
 **05 — CI/CD with OpenShift Pipelines**
 Introduction to building automated CI/CD pipelines natively in OpenShift using Tekton.
 
-> Labs coming soon.
+- Explore the demo application and pipeline configuration
+- Review Tekton `Pipeline`, `Task`, and `PipelineRun` resources
+- Trigger and monitor a CI/CD pipeline run on OpenShift
+
 
 ---
 
