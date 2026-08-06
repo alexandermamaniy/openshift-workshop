@@ -25,15 +25,49 @@ Complete these steps **before the workshop begins**. You will need Docker and Do
 
 ---
 
-## Day 1 — Introduction to Docker
+## Day 1 — Container Fundamentals
 
-An introduction to containerization concepts and hands-on Docker practice.
+An introduction to containerization concepts, modern application architecture, and hands-on Docker practice.
 
 ### Topics
 
-| Topic | Slides | Lab |
-|-------|--------|-----|
-| Introduction to Docker | [slide.pdf](./day-1/introduction-to-docker/slide.pdf) | [Lab →](./day-1/introduction-to-docker/lab/README.md) |
+| # | Topic | Slides | Lab |
+|---|-------|--------|-----|
+| 01 | Virtualization vs Containers | [slide.pdf](./day-1/introduction-to-docker/slide.pdf) | — |
+| 02 | Modern Application Architecture | [slide.pdf](./day-1/introduction-to-docker/slide.pdf) | — |
+| 03 | Introduction to Docker | [slide.pdf](./day-1/introduction-to-docker/slide.pdf) | [Lab →](./day-1/introduction-to-docker/lab/README.md) |
+
+### Session Summaries
+
+**01 — Virtualization vs Containers**
+Understand the fundamental differences between virtual machines and containers, and when to use each.
+
+- What is virtualization? Hypervisors, VMs, and their use cases
+- What is a container? Namespaces, cgroups, and the Linux kernel
+- Use cases for VMs vs containers
+- Comparison: boot time, resource usage, isolation, and portability
+
+---
+
+**02 — Modern Application Architecture**
+Explore the architecture patterns that underpin cloud-native applications.
+
+- **Microservices** — decomposing monoliths into independently deployable services
+- **Serverless** — event-driven functions on AWS Lambda, Azure Functions, IBM Cloud Functions, GCP Cloud Run; OpenShift Serverless integration
+- **Autoscaling** — horizontal scaling vs vertical scaling
+- **Automation & CI/CD** — pipeline-driven delivery from code commit to production
+- **Observability & Monitoring** — logs, metrics, traces, and alerting in distributed systems
+
+---
+
+**03 — Introduction to Docker**
+Build and run a containerized web application using Docker.
+
+- What is a Container Image — anatomy of a `Dockerfile`, layers, and build cache
+- What is a Container — runtime lifecycle from `created` → `running` → `stopped` → `removed`
+- Container Registries — pull and push images; Docker Hub, Quay (Red Hat), OpenShift internal registry
+- Docker container lifecycle management — `run`, `stop`, `start`, `rm`, `logs`, `exec`, `inspect`
+- Docker Compose — defining and running multi-container applications with a `docker-compose.yml`
 
 ### Lab Summary
 
@@ -117,34 +151,44 @@ An introduction to IBM products on OpenShift and AI/ML capabilities available on
 
 ### Topics
 
-| Session | Topic | Slides |
-|---------|-------|--------|
-| Morning | IBM Products on OpenShift & Container Options | [slide.pdf](./day-3/Introduction%20to%20OpenShift%20AI.pdf) |
-| Afternoon | Introduction to OpenShift AI & RAG with OGX | [slide.pdf](./day-3/Introduction%20to%20OpenShift%20AI.pdf) |
+| # | Topic | Slides | Lab |
+|---|-------|--------|-----|
+| 01 | IBM Products on OpenShift | [slide.pdf](./day-3/Introduction%20to%20OpenShift%20AI.pdf) | — |
+| 02 | Container Options in IBM | [slide.pdf](./day-3/Introduction%20to%20OpenShift%20AI.pdf) | — |
+| 03 | Introduction to OpenShift AI | [slide.pdf](./day-3/Introduction%20to%20OpenShift%20AI.pdf) | — |
+| 04 | RAG with OGX (Open GenAI Stack) | [slide.pdf](./day-3/Introduction%20to%20OpenShift%20AI.pdf) | — |
 
-### Morning — IBM Products on OpenShift
+### Session Summaries
 
-**IBM Products on OpenShift**
+**01 — IBM Products on OpenShift**
+Explore the IBM product portfolio running natively on OpenShift.
 
 - OpenShift Virtualization on IBM Z
 - Confidential Containers & Secure Execution
 - IBM Fusion Data Foundation & IBM Storage Scale
 
-**Container Options in IBM**
+---
+
+**02 — Container Options in IBM**
+Overview of container deployment options available within the IBM ecosystem.
 
 - zCX (Docker and OpenShift)
 - Torch Spyre Development
 - Example of AI running on a Container Demo
 
-### Afternoon — OpenShift AI & RAG
+---
 
-**Introduction to OpenShift AI**
+**03 — Introduction to OpenShift AI**
+Understand the AI/ML platform built into OpenShift and the concepts that power it.
 
 - What is **RAG** (Retrieval-Augmented Generation) and how it works
 - Introduction to **OGX** (Open GenAI Stack)
 - Connecting to **MaaS** (Model as a Service) LLM endpoints
 
-**Hands-on: Building a RAG Pipeline with OGX**
+---
+
+**04 — RAG with OGX (Open GenAI Stack)**
+Hands-on walkthrough building an end-to-end RAG pipeline using OGX.
 
 - Build a basic RAG pipeline with OGX (Open GenAI Stack)
 - Ingest documents into a vector store using OGX
