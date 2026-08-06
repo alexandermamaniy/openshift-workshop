@@ -33,9 +33,9 @@ An introduction to containerization concepts, modern application architecture, a
 
 | # | Topic | Slides | Lab |
 |---|-------|--------|-----|
-| 01 | Virtualization vs Containers | [slide.pdf](./day-1/introduction-to-docker/Virtualization-vs-containers-workshop.pdf) | — |
-| 02 | Modern Application Architecture | [slide.pdf](./day-1/introduction-to-docker/slide.pdf) | — |
-| 03 | Introduction to Docker | [slide.pdf](./day-1/03-introduction-to-docker/slide.pdf) | [Lab →](./day-1/03-introduction-to-docker/lab/README.md) |
+| 01 | Virtualization vs Containers | [slide.pdf](./day-1/01-intro-overview/Virtualization-vs-containers-workshop.pdf) | — |
+| 02 | Modern Application Architecture | [slide.pdf](./day-1/01-intro-overview/Virtualization-vs-containers-workshop.pdf) | — |
+| 03 | Introduction to Docker | [slide.pdf](./day-1/01-intro-overview/Virtualization-vs-containers-workshop.pdf) | [Lab →](./day-1/03-introduction-to-docker/lab/README.md) |
 
 ### Session Summaries
 
