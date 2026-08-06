@@ -111,50 +111,45 @@ Introduction to building automated CI/CD pipelines natively in OpenShift using T
 
 ---
 
-## Day 3 — OpenShift AI
+## Day 3 — IBM and OpenShift AI
 
-An introduction to AI/ML capabilities available on the OpenShift platform.
+An introduction to IBM products on OpenShift and AI/ML capabilities available on the OpenShift platform.
 
-| Topic | Slides |
-|-------|--------|
-| Introduction to OpenShift AI | [slide.pdf](./day-3/Introduction%20to%20OpenShift%20AI.pdf) |
+### Topics
+
+| Session | Topic | Slides |
+|---------|-------|--------|
+| Morning | IBM Products on OpenShift & Container Options | [slide.pdf](./day-3/Introduction%20to%20OpenShift%20AI.pdf) |
+| Afternoon | Introduction to OpenShift AI & RAG with OGX | [slide.pdf](./day-3/Introduction%20to%20OpenShift%20AI.pdf) |
+
+### Morning — IBM Products on OpenShift
+
+**IBM Products on OpenShift**
+
+- OpenShift Virtualization on IBM Z
+- Confidential Containers & Secure Execution
+- IBM Fusion Data Foundation & IBM Storage Scale
+
+**Container Options in IBM**
+
+- zCX (Docker and OpenShift)
+- Torch Spyre Development
+- Example of AI running on a Container Demo
+
+### Afternoon — OpenShift AI & RAG
+
+**Introduction to OpenShift AI**
+
+- What is **RAG** (Retrieval-Augmented Generation) and how it works
+- Introduction to **OGX** (Open GenAI Stack)
+- Connecting to **MaaS** (Model as a Service) LLM endpoints
+
+**Hands-on: Building a RAG Pipeline with OGX**
+
+- Build a basic RAG pipeline with OGX (Open GenAI Stack)
+- Ingest documents into a vector store using OGX
+- Query ingested documents through the RAG pipeline
+- End-to-end walkthrough: from document upload to AI-powered Q&A
 
 ---
 
-## Repository Structure
-
-```
-.
-├── pre-setup/
-│   ├── docker-installation.md          # Docker install guide (Windows, macOS & Fedora)
-│   └── docker-compose-installation.md  # Docker Compose install guide (Windows, macOS & Fedora)
-│
-├── day-1/
-│   └── introduction-to-docker/
-│       ├── slide.pdf
-│       └── lab/
-│           ├── Dockerfile
-│           └── README.md
-│
-├── day-2/
-│   ├── 01-introduction-to-openshift/
-│   │   ├── slide.pdf
-│   │   └── labs/image-streams/         # coffee-shop, rent-car, veterinary apps
-│   ├── 02-openshift-deployments/
-│   │   ├── slide.pdf
-│   │   └── labs/
-│   │       ├── basic-deployment/       # Imperative, declarative, web console
-│   │       ├── configmap-and-secrets/  # Secret + ConfigMap + StatefulSet
-│   │       └── statefulset/            # StatefulSet scaling & PVC persistence
-│   ├── 03-openshift-storage/
-│   │   ├── slide.pdf
-│   │   └── labs/storage/               # PVC creation and data persistence
-│   ├── 04-horizontal-pod-autoscaler/
-│   │   ├── slide.pdf
-│   │   └── labs/                       # HPA with load generation
-│   └── 05-CI-CD-with-openshift-pipelines/
-│       └── slide.pdf
-│
-└── day-3/
-    └── Introduction to OpenShift AI.pdf
-```
