@@ -95,6 +95,7 @@ docker login -u $(oc whoami) -p $(oc whoami --show-token) ${REGISTRY}
 > Required before pushing — the push will fail with `500 Internal Server Error` without this.
 
 ```bash
+oc new-project $NAMESPACE
 oc create imagestream ${IMAGE} -n ${NAMESPACE}
 ```
 

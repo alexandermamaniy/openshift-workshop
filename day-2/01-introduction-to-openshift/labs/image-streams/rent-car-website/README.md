@@ -97,6 +97,7 @@ docker login -u $(oc whoami) -p $(oc whoami --show-token) ${REGISTRY}
 
 ```bash
 oc create imagestream ${IMAGE} -n ${NAMESPACE}
+oc new-project ${NAMESPACE}
 ```
 
 ### Step 6 — Push the image
