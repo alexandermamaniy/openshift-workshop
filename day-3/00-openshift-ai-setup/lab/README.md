@@ -111,7 +111,7 @@ This enables developer feature flags that give access to features not yet Genera
 
 Congratulations! Your OpenShift AI environment is fully set up and ready to go. You now have a project, a workbench, and the developer features enabled — everything you need to start building with GenAI.
 
-Proceed to the following labs. It is recommended to follow them sequentially:
+Proceed to the following labs in order:
 
 - [Lab 01 - GenAI Playground & RAG](../01-genai-playground-rag/)
 - [Lab 02 - PDF Ingestion RAG](../02-pdf-ingestion-rag/)

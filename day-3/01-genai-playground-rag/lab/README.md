@@ -145,6 +145,8 @@ Tell me about the Rabbit that lives in Waterford City?
 
 8.2. Upload additional documents and observe how the model handles context from multiple sources. The GenAI Playground supports **PDF**, **CSV**, and **TXT** files.
 
+8.3. Try changing the system instructions in the playground (under the **Instructions** tab) to see how it affects the agent's behaviour. For example, instruct it to respond in a different language, keep answers under one sentence, or adopt a specific persona like a pirate or a formal banker.
+
 > **Note:** The file type support is a limitation of the UI. In Lab 02, we will build a similar RAG pipeline programmatically in a Jupyter notebook, where you have full control over which file types to support. To keep things simple, we will use PDF in that lab, but it is possible to extend it to support images, audio, and more.
 
 ## Next Steps
