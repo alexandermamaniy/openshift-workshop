@@ -1,16 +1,16 @@
 # Day 3 - AI on OpenShift
 
-This day covers GenAI and RAG workflows on OpenShift AI, from playground exploration to building a full end-to-end voice-enabled assistant.
+Generative AI and RAG workflows on OpenShift AI. From using the GenAI playground UI to building a full end-to-end voice-enabled customer support assistant.
 
 ## Prerequisites
 
-Complete **Lab 00 - OpenShift AI Setup** before proceeding with any other labs. This ensures your environment is properly configured.
+Complete **Lab 00** first to set up your environment. Then follow the labs sequentially.
 
 ## Labs
 
 | Lab | Title | Description |
 |-----|-------|-------------|
-| 00 | [OpenShift AI Setup](./00-openshift-ai-setup/) | Environment setup and access to OpenShift AI |
-| 01 | [GenAI Playground & RAG](./01-genai-playground-rag/) | Using the OpenShift AI GenAI playground UI with RAG |
-| 02 | [PDF Ingestion RAG](./02-pdf-ingestion-rag/) | Simple PDF ingestion and RAG in Jupyter notebooks |
-| 03 | [Red Bank Financial RAG](./03-redbank-financial-rag/) | End-to-end RAG assistant with STT and TTS models |
+| 00 | [OpenShift AI Setup](./00-openshift-ai-setup/lab/) | Environment setup, workbench creation, and feature flags |
+| 01 | [GenAI Playground & RAG](./01-genai-playground-rag/lab/) | Connect a remote model and use RAG through the UI |
+| 02 | [PDF Ingestion RAG](./02-pdf-ingestion-rag/lab/) | Build a programmatic RAG pipeline in a Jupyter notebook |
+| 03 | [Red Bank Financial RAG](./03-redbank-financial-rag/lab/) | End-to-end voice assistant with STT, RAG, and TTS |
