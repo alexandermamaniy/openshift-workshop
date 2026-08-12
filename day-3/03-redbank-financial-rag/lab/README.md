@@ -282,7 +282,7 @@ mic.display()
 
 8.2. Click **Record**, speak your question about Red Bank Financial, then click **Stop**. Suggested questions: "Who founded Red Bank Financial?" or "How can I transfer money to another account?"
 
-<img src="images/8.1.png" alt="Lab-mic recording widget in Jupyter notebook" width="100%"/>
+<img src="images/8.1.png" alt="Lab-mic recording widget in Jupyter notebook" width="80%"/>
 
 > **Note:** If the recording widget does not appear, try refreshing the page.
 

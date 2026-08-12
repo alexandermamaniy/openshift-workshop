@@ -105,7 +105,7 @@ This enables developer feature flags that give access to features not yet Genera
 
 5.6. Verify that **Gen AI Studio** now appears in the left-hand side bar.
 
-<img src="images/5.6.png" alt="Gen AI Studio in sidebar" width="100%"/>
+<img src="images/5.6.png" alt="Gen AI Studio in sidebar" width="60%"/>
 
 ## Next Steps
 

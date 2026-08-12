@@ -142,12 +142,11 @@ Introduction to building automated CI/CD pipelines natively in OpenShift using T
 - Review Tekton `Pipeline`, `Task`, and `PipelineRun` resources
 - Trigger and monitor a CI/CD pipeline run on OpenShift
 
-
 ---
 
 ## Day 3 — IBM and OpenShift AI
 
-An introduction to IBM products on OpenShift and AI/ML capabilities available on the OpenShift platform.
+An introduction to IBM products on OpenShift and AI/ML capabilities available on the OpenShift platform. From using the GenAI playground UI to building a full end-to-end voice-enabled customer support assistant.
 
 ### Topics
 
@@ -157,6 +156,17 @@ An introduction to IBM products on OpenShift and AI/ML capabilities available on
 | 02 | Container Options in IBM | [slide.pdf](./day-3/AI-Containers-IBM.pdf) | — |
 | 03 | Introduction to OpenShift AI | [slide.pdf](./day-3/Introduction%20to%20OpenShift%20AI.pdf) | — |
 | 04 | RAG with OGX (Open GenAI Stack) | [slide.pdf](./day-3/Introduction%20to%20OpenShift%20AI.pdf) | — |
+
+### Labs
+
+Complete **Lab 00** first to set up your environment. Then follow the labs sequentially.
+
+| Lab | Title | Description |
+|-----|-------|-------------|
+| 00 | [OpenShift AI Setup](./day-3/00-openshift-ai-setup/lab/) | Environment setup, workbench creation, and feature flags |
+| 01 | [GenAI Playground & RAG](./day-3/01-genai-playground-rag/lab/) | Connect a remote model and use RAG through the UI |
+| 02 | [PDF Ingestion RAG](./day-3/02-pdf-ingestion-rag/lab/) | Build a programmatic RAG pipeline in a Jupyter notebook |
+| 03 | [Red Bank Financial RAG](./day-3/03-redbank-financial-rag/lab/) | End-to-end voice assistant with STT, RAG, and TTS |
 
 ### Session Summaries
 
@@ -190,10 +200,7 @@ Understand the AI/ML platform built into OpenShift and the concepts that power i
 **04 — RAG with OGX (Open GenAI Stack)**
 Hands-on walkthrough building an end-to-end RAG pipeline using OGX.
 
-- Build a basic RAG pipeline with OGX (Open GenAI Stack)
-- Ingest documents into a vector store using OGX
-- Query ingested documents through the RAG pipeline
-- End-to-end walkthrough: from document upload to AI-powered Q&A
-
----
-
+- Setting up the OpenShift AI environment, workbenches, and feature flags
+- Using the GenAI Playground UI to connect remote models and experiment with RAG
+- Building a programmatic PDF ingestion RAG pipeline in Jupyter notebooks
+- Creating a full voice-enabled customer support assistant with Speech-to-Text, RAG, and Text-to-Speech
