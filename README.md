@@ -88,7 +88,7 @@ Covers core OpenShift concepts through a series of progressive hands-on labs.
 
 | # | Topic | Slides | Lab |
 |---|-------|--------|-----|
-| 01 | Introduction to OpenShift & Image Streams | [slide.pdf](./day-2/01-introduction-to-openshift/introduction-to-openshift.pdf) | — |
+| 01 | Introduction to OpenShift | [slide.pdf](./day-2/01-introduction-to-openshift/introduction-to-openshift.pdf) | — |
 | 02 | Image Streams | [slide.pdf](./day-2/01-introduction-to-openshift/slide.pdf) | [Lab →](./day-2/01-introduction-to-openshift/labs/image-streams/) |
 | 03 | OpenShift Deployments | [slide.pdf](./day-2/02-openshift-deployments/slide.pdf) | [Lab →](./day-2/02-openshift-deployments/labs/) |
 | 04 | OpenShift Storage | [slide.pdf](./day-2/03-openshift-storage/slide.pdf) | [Lab →](./day-2/03-openshift-storage/labs/storage/README.md) |
