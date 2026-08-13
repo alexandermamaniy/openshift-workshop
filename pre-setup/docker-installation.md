@@ -280,6 +280,12 @@ If all three commands succeed, Docker is correctly installed and ready to use.
 sudo usermod -aG docker $USER
 newgrp docker
 ```
+If the problem persists you may have to add your user to docker jenkins and change the permissions on the file:
+```
+usermod -aG docker jenkins
+usermod -aG root jenkins
+chmod 664 /var/run/docker.sock
+```
 
 ### Fedora — `docker.service` fails to start
 
