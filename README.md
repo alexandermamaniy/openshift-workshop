@@ -35,9 +35,9 @@ An introduction to containerization concepts, modern application architecture, h
 
 | # | Topic | Slides | Lab |
 |---|-------|--------|-----|
-| 01 | Introduction to Containerization | [slide.pdf](./day-1/01-intro-overview/Virtualization-vs-containers-workshop.pdf) | — |
-| 02 | Introduction to Docker | [slide.pdf](./day-1/01-intro-overview/Virtualization-vs-containers-workshop.pdf) | [Lab →](./day-1/03-introduction-to-docker/lab/README.md) |
-| 03 | Introduction to kubernetes | [slide.pdf](./day-1/01-intro-overview/Virtualization-vs-containers-workshop.pdf) | [Lab →](./day-1/03-introduction-to-docker/lab/README.md) |
+| 01 | Introduction to Containerization | [slide.pdf](./day-1/01-intro-to-containerization/Virtualization-vs-containers-workshop.pdf) | - |
+| 02 | Introduction to Docker | [slide.pdf](./day-1/01-intro-to-containerization/Virtualization-vs-containers-workshop.pdf) | [Lab →](./day-1/02-introduction-to-docker/lab/README.md) |
+| 03 | Introduction to kubernetes | [slide.pdf](./day-1/introduction-to-kubernetes.pdf) | - |
 
 ### Session Summaries
 
@@ -50,24 +50,24 @@ Understand the fundamental differences between virtual machines and containers, 
 
 Explore the architecture patterns that underpin cloud-native applications.
 
-- **Microservices** — decomposing monoliths into independently deployable services
-- **Serverless** — event-driven functions on AWS Lambda, Azure Functions, IBM Cloud Functions, GCP Cloud Run; OpenShift Serverless integration
-- **Autoscaling** — horizontal scaling vs vertical scaling
-- **Automation & CI/CD** — pipeline-driven delivery from code commit to production
+- **Microservices** - decomposing monoliths into independently deployable services
+- **Serverless** - event-driven functions on AWS Lambda, Azure Functions, IBM Cloud Functions, GCP Cloud Run; OpenShift Serverless integration
+- **Autoscaling** - horizontal scaling vs vertical scaling
+- **Automation & CI/CD** - pipeline-driven delivery from code commit to production
 
 ---
 
-**02 — Introduction to Docker**
+**02 - Introduction to Docker**
 Build and run a containerized web application using Docker.
 
-- What is a Container Image — anatomy of a `Dockerfile`, layers, and build cache
-- What is a Container — runtime lifecycle from `created` → `running` → `stopped` → `removed`
-- Container Registries — pull and push images; Docker Hub, Quay (Red Hat), OpenShift internal registry
-- Docker container lifecycle management — `run`, `stop`, `start`, `rm`, `logs`, `exec`, `inspect`
-- Docker Compose — defining and running multi-container applications with a `docker-compose.yml`
+- What is a Container Image - anatomy of a `Dockerfile`, layers, and build cache
+- What is a Container - runtime lifecycle from `created` → `running` → `stopped` → `removed`
+- Container Registries - pull and push images; Docker Hub, Quay (Red Hat), OpenShift internal registry
+- Docker container lifecycle management - `run`, `stop`, `start`, `rm`, `logs`, `exec`, `inspect`
+- Docker Compose - defining and running multi-container applications with a `docker-compose.yml`
 
 
-**03 — Introduction to kubernetes**
+**03 - Introduction to kubernetes**
 
 Explore the core and architecture of kubernetes.
 
@@ -78,18 +78,10 @@ Explore the core and architecture of kubernetes.
 - Storage - Volumes, PersistenVolumes, PersistenVolumeClaims, StorageClass
 - Configurations - ConfigMaps, Secrets
 
-### Lab Summary
-
-**Introduction to Docker**
-Build and run a containerized web application (IBMeetingU) using Docker.
-
-- Build a Docker image from a `Dockerfile`
-- Run the container locally on port `8080`
-- Practice essential Docker commands: `logs`, `stop`, `rm`, `rmi`
 
 ---
 
-## Day 2 — OpenShift Fundamentals
+## Day 2 - OpenShift Fundamentals
 
 Covers core OpenShift concepts through a series of progressive hands-on labs.
 
@@ -97,16 +89,16 @@ Covers core OpenShift concepts through a series of progressive hands-on labs.
 
 | # | Topic | Slides | Lab |
 |---|-------|--------|-----|
-| 01 | Introduction to OpenShift | [slide.pdf](./day-2/01-introduction-to-openshift/introduction-to-openshift.pdf) | — |
-| 02 | Image Streams | [slide.pdf](./day-2/01-introduction-to-openshift/slide.pdf) | [Lab →](./day-2/01-introduction-to-openshift/labs/image-streams/) |
-| 03 | OpenShift Deployments | [slide.pdf](./day-2/02-openshift-deployments/slide.pdf) | [Lab →](./day-2/02-openshift-deployments/labs/) |
-| 04 | OpenShift Storage | [slide.pdf](./day-2/03-openshift-storage/slide.pdf) | [Lab →](./day-2/03-openshift-storage/labs/storage/README.md) |
-| 05 | Horizontal Pod Autoscaler | [slide.pdf](./day-2/04-horizontal-pod-autoscaler/slide.pdf) | [Lab →](./day-2/04-horizontal-pod-autoscaler/labs/README.md) |
-| 06 | CI/CD with OpenShift Pipelines | [slide.pdf](./day-2/05-CI-CD-with-openshift-pipelines/slide.pdf) | [Lab →](https://gitlab.com/alexandermamaniy/openshift-demo) |
+| 01 | Introduction to OpenShift | [slide.pdf](./day-2/introduction-to-openshift.pdf) | - |
+| 02 | Image Streams | - | [Lab →](./day-2/01-image-streams/labs/image-streams/) |
+| 03 | OpenShift Deployments | - | [Lab →](./day-2/02-openshift-deployments/labs/basic-deployment/README.md) |
+| 04 | OpenShift Storage | - | [Lab →](./day-2/03-openshift-storage/labs/storage/README.md) |
+| 05 | Horizontal Pod Autoscaler | - | [Lab →](./day-2/04-horizontal-pod-autoscaler/labs/README.md) |
+| 06 | CI/CD with OpenShift Pipelines | - | [Lab →](https://gitlab.com/alexandermamaniy/openshift-demo) |
 
 ### Lab Summaries
 
-**01 — Introduction to OpenShift & Image Streams**
+**01 - Introduction to OpenShift & Image Streams**
 Build container images locally, push them to the OpenShift internal registry via Image Streams, and deploy them as running applications on the cluster.
 
 - Build and tag Docker images for three sample web apps (coffee shop, rent-a-car, veterinary clinic)
@@ -117,16 +109,16 @@ Build container images locally, push them to the OpenShift internal registry via
 
 ---
 
-**02 — OpenShift Deployments**
+**02 - OpenShift Deployments**
 Deploy a containerized application to OpenShift using three different approaches, then manage configuration and stateful workloads.
 
-- **Basic Deployment** — deploy `hello-openshift` imperatively (CLI), declaratively (YAML), and via the Web Console; expose with HTTPS Route
-- **ConfigMaps & Secrets** — store database credentials in a `Secret` and non-sensitive config in a `ConfigMap`; inject them as environment variables into a PostgreSQL StatefulSet
-- **StatefulSets** — observe stable pod names, ordered startup, and per-pod PVCs that survive pod deletion
+- **Basic Deployment** - deploy `hello-openshift` imperatively (CLI), declaratively (YAML), and via the Web Console; expose with HTTPS Route
+- **ConfigMaps & Secrets** - store database credentials in a `Secret` and non-sensitive config in a `ConfigMap`; inject them as environment variables into a PostgreSQL StatefulSet
+- **StatefulSets** - observe stable pod names, ordered startup, and per-pod PVCs that survive pod deletion
 
 ---
 
-**03 — OpenShift Storage**
+**03 - OpenShift Storage**
 Understand the difference between ephemeral and persistent storage and prove that data survives pod restarts.
 
 - Create a `PersistentVolumeClaim` (PVC) backed by `gp3-csi` storage
@@ -135,7 +127,7 @@ Understand the difference between ephemeral and persistent storage and prove tha
 
 ---
 
-**04 — Horizontal Pod Autoscaler**
+**04 - Horizontal Pod Autoscaler**
 Configure automatic scaling based on CPU utilization and observe the HPA react in real time.
 
 - Deploy the `hpa-demo` application with CPU/memory resource requests and limits
@@ -145,7 +137,7 @@ Configure automatic scaling based on CPU utilization and observe the HPA react i
 
 ---
 
-**05 — CI/CD with OpenShift Pipelines**
+**05 - CI/CD with OpenShift Pipelines**
 Introduction to building automated CI/CD pipelines natively in OpenShift using Tekton.
 
 - Explore the demo application and pipeline configuration
@@ -154,7 +146,7 @@ Introduction to building automated CI/CD pipelines natively in OpenShift using T
 
 ---
 
-## Day 3 — IBM and OpenShift AI
+## Day 3 - IBM and OpenShift AI
 
 An introduction to IBM products on OpenShift and AI/ML capabilities available on the OpenShift platform. From using the GenAI playground UI to building a full end-to-end voice-enabled customer support assistant.
 
@@ -162,10 +154,10 @@ An introduction to IBM products on OpenShift and AI/ML capabilities available on
 
 | # | Topic | Slides | Lab |
 |---|-------|--------|-----|
-| 01 | IBM Products on OpenShift | [slide.pdf](./day-3/Introduction%20to%20OpenShift%20AI.pdf) | — |
-| 02 | Container Options in IBM | [slide.pdf](./day-3/AI-Containers-IBM.pdf) | — |
-| 03 | Introduction to OpenShift AI | [slide.pdf](./day-3/Introduction%20to%20OpenShift%20AI.pdf) | — |
-| 04 | RAG with OGX (Open GenAI Stack) | [slide.pdf](./day-3/Introduction%20to%20OpenShift%20AI.pdf) | — |
+| 01 | IBM Products on OpenShift | [slide.pdf](./day-3/Introduction%20to%20OpenShift%20AI.pdf) | - |
+| 02 | Container Options in IBM | [slide.pdf](./day-3/AI-Containers-IBM.pdf) | - |
+| 03 | Introduction to OpenShift AI | [slide.pdf](./day-3/Introduction%20to%20OpenShift%20AI.pdf) | - |
+| 04 | RAG with OGX (Open GenAI Stack) | [slide.pdf](./day-3/Introduction%20to%20OpenShift%20AI.pdf) | - |
 
 ### Labs
 
@@ -180,7 +172,7 @@ Complete **Lab 00** first to set up your environment. Then follow the labs seque
 
 ### Session Summaries
 
-**01 — IBM Products on OpenShift**
+**01 - IBM Products on OpenShift**
 Explore the IBM product portfolio running natively on OpenShift.
 
 - OpenShift Virtualization on IBM Z
@@ -189,7 +181,7 @@ Explore the IBM product portfolio running natively on OpenShift.
 
 ---
 
-**02 — Container Options in IBM**
+**02 - Container Options in IBM**
 Overview of container deployment options available within the IBM ecosystem.
 
 - zCX (Docker and OpenShift)
@@ -198,7 +190,7 @@ Overview of container deployment options available within the IBM ecosystem.
 
 ---
 
-**03 — Introduction to OpenShift AI**
+**03 - Introduction to OpenShift AI**
 Understand the AI/ML platform built into OpenShift and the concepts that power it.
 
 - What is **RAG** (Retrieval-Augmented Generation) and how it works
@@ -207,7 +199,7 @@ Understand the AI/ML platform built into OpenShift and the concepts that power i
 
 ---
 
-**04 — RAG with OGX (Open GenAI Stack)**
+**04 - RAG with OGX (Open GenAI Stack)**
 Hands-on walkthrough building an end-to-end RAG pipeline using OGX.
 
 - Setting up the OpenShift AI environment, workbenches, and feature flags
