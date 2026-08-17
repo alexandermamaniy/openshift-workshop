@@ -19,14 +19,30 @@ This guide covers the installation of OC and CRC on  **Fedora Linux** before the
 |-----------|---------------------|
 | CPUs | 8 physical CPU cores |
 | Memory | 15 GB of free memory |
-| Storage | 60 GB of available storage |
+| Storage | 80 GB of available storage |
 
 <br>
 
 ---
 
-## Installing on Fedora
 
+## Operating system requirements
+
+CRC requires the following minimum version of a supported operating system:
+
+### Linux - Fedora
+- Latest two stable releases.
+- libvirt and NetworkManager packages are installed.
+
+```bash
+sudo dnf install libvirt NetworkManager
+```
+
+### macOS
+- macOS 13 Ventura or later.
+- CRC does not work on earlier macOS versions.
+
+## Installing on Fedora
 Go to https://console.redhat.com/openshift/downloads and download these three things
 (a free Red Hat account is required):
 
@@ -87,7 +103,7 @@ Take note of the pull secret you downloaded as you will be using it later
 Once installed we can configure the crc cluster.
 
 ```
-crc config set disk-size 60
+crc config set disk-size 80
 crc config set cpu 8
 crc config set memory 15360
 
