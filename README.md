@@ -16,51 +16,48 @@ Welcome to the OpenShift Workshop! This repository contains all slides, labs, an
 
 ## Pre-Setup
 
-Complete these steps **before the workshop begins**. You will need Docker and Docker Compose installed on your machine.
+Complete these steps **before the workshop begins**. You will need Docker, Docker Compose, oc and crc installed on your machine.
 
 | Guide | Operating System |
 |-------|:------:|
 | [Docker Installation](./pre-setup/docker-installation.md) | Windows,  macOS,  Fedora |
 | [Docker Compose Installation](./pre-setup/docker-compose-installation.md) | Windows, macOS, Fedora |
-
+| [oc and crc Installation](./pre-setup/oc-crc--installation.md) | Windows, macOS, Fedora |
 ---
 
-## Day 1 — Container Fundamentals
+You must also have a [GitHub](https://github.com/signup) and [GitLab](https://gitlab.com/-/trial_registrations/new) account
 
-An introduction to containerization concepts, modern application architecture, and hands-on Docker practice.
+## Day 1 - Containerization and Orchestration 
+
+An introduction to containerization concepts, modern application architecture, hands-on Docker practice, and kubernetes.
 
 ### Topics
 
 | # | Topic | Slides | Lab |
 |---|-------|--------|-----|
-| 01 | Virtualization vs Containers | [slide.pdf](./day-1/01-intro-overview/Virtualization-vs-containers-workshop.pdf) | — |
-| 02 | Modern Application Architecture | [slide.pdf](./day-1/01-intro-overview/Virtualization-vs-containers-workshop.pdf) | — |
-| 03 | Introduction to Docker | [slide.pdf](./day-1/01-intro-overview/Virtualization-vs-containers-workshop.pdf) | [Lab →](./day-1/03-introduction-to-docker/lab/README.md) |
+| 01 | Introduction to Containerization | [slide.pdf](./day-1/01-intro-overview/Virtualization-vs-containers-workshop.pdf) | — |
+| 02 | Introduction to Docker | [slide.pdf](./day-1/01-intro-overview/Virtualization-vs-containers-workshop.pdf) | [Lab →](./day-1/03-introduction-to-docker/lab/README.md) |
+| 03 | Introduction to kubernetes | [slide.pdf](./day-1/01-intro-overview/Virtualization-vs-containers-workshop.pdf) | [Lab →](./day-1/03-introduction-to-docker/lab/README.md) |
 
 ### Session Summaries
 
-**01 — Virtualization vs Containers**
+**01 - Introduction to Containerization**
 Understand the fundamental differences between virtual machines and containers, and when to use each.
 
 - What is virtualization? Hypervisors, VMs, and their use cases
 - What is a container? Namespaces, cgroups, and the Linux kernel
 - Use cases for VMs vs containers
-- Comparison: boot time, resource usage, isolation, and portability
 
----
-
-**02 — Modern Application Architecture**
 Explore the architecture patterns that underpin cloud-native applications.
 
 - **Microservices** — decomposing monoliths into independently deployable services
 - **Serverless** — event-driven functions on AWS Lambda, Azure Functions, IBM Cloud Functions, GCP Cloud Run; OpenShift Serverless integration
 - **Autoscaling** — horizontal scaling vs vertical scaling
 - **Automation & CI/CD** — pipeline-driven delivery from code commit to production
-- **Observability & Monitoring** — logs, metrics, traces, and alerting in distributed systems
 
 ---
 
-**03 — Introduction to Docker**
+**02 — Introduction to Docker**
 Build and run a containerized web application using Docker.
 
 - What is a Container Image — anatomy of a `Dockerfile`, layers, and build cache
@@ -68,6 +65,18 @@ Build and run a containerized web application using Docker.
 - Container Registries — pull and push images; Docker Hub, Quay (Red Hat), OpenShift internal registry
 - Docker container lifecycle management — `run`, `stop`, `start`, `rm`, `logs`, `exec`, `inspect`
 - Docker Compose — defining and running multi-container applications with a `docker-compose.yml`
+
+
+**03 — Introduction to kubernetes**
+
+Explore the core and architecture of kubernetes.
+
+- Architecture Overview - Control Plane and Compute Nodes
+- Networking 
+- Core Objects and API - Namespaces, Pods, Labels, Selectors, Services
+- Core workload - ReplicaSet, Deployment, DaemonSet, StatefulSet, Job, CronJob
+- Storage - Volumes, PersistenVolumes, PersistenVolumeClaims, StorageClass
+- Configurations - ConfigMaps, Secrets
 
 ### Lab Summary
 

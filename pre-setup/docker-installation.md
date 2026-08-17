@@ -153,11 +153,13 @@ If macOS blocks Docker Desktop from opening:
 
 ---
 
-## Installing Docker Engine on Fedora
+## Installing Docker Engine on Fedora using the rpm repository
 
 On Fedora, Docker runs as a system service (Docker Engine) rather than a desktop application.
 
-### Step 1 — Remove Conflicting Packages
+If you have Docker installed already, skip the installation.
+
+### Step 1 - Remove Conflicting Packages
 
 Remove any older or conflicting Docker-related packages that may be pre-installed:
 
@@ -174,21 +176,17 @@ sudo dnf remove -y docker \
   docker-engine
 ```
 
-### Step 2 — Set Up the Docker Repository
+### Step 2 - Set Up the Docker Repository
 
-Install the `dnf-plugins-core` package and add the official Docker repository:
-
+Set up the repository
 ```bash
-sudo dnf install -y dnf-plugins-core
-
-sudo dnf config-manager --add-repo \
-  https://download.docker.com/linux/fedora/docker-ce.repo
+sudo dnf config-manager addrepo --from-repofile https://download.docker.com/linux/fedora/docker-ce.repo
 ```
 
 ### Step 3 — Install Docker Engine
 
 ```bash
-sudo dnf install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+sudo dnf install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 ```
 
 ### Step 4 — Start and Enable the Docker Service
@@ -204,44 +202,36 @@ Verify the service is running:
 sudo systemctl status docker
 ```
 
+
+Verify that the installation is successful by running the hello-world image:
+
+```bash
+ sudo docker run hello-world
+```
+
+## Post-instalation steps
+
 ### Step 5 — Add Your User to the `docker` Group
 
 This allows you to run Docker commands without `sudo`:
 
 ```bash
+sudo groupadd docker
 sudo usermod -aG docker $USER
 ```
 
 > **Important:** Log out and log back in (or run `newgrp docker`) for the group change to take effect.
 
+You can also run the following command to activate the changes to groups:
+
+```bash
+newgrp docker
+```
+
 ### Step 6 — Verify the Installation
 
 ```bash
-docker --version
-docker run hello-world
-```
-
----
-
-## Post-Installation: Verify the Installation
-
-Once Docker is running, open a terminal and run the following commands to confirm Docker is correctly installed.
-
-**Check Docker version:**
-
-```bash
-docker --version
-```
-
-Expected output (version may differ):
-
-```
-Docker version 27.x.x, build xxxxxxx
-```
-
-**Run a test container:**
-
-```bash
+docker version
 docker run hello-world
 ```
 
@@ -261,7 +251,7 @@ docker compose version
 Expected output:
 
 ```
-Docker Compose version v2.x.x
+Docker Compose version v5.x.x
 ```
 
 If all three commands succeed, Docker is correctly installed and ready to use.
@@ -270,22 +260,7 @@ If all three commands succeed, Docker is correctly installed and ready to use.
 
 ## Troubleshooting
 
-### Fedora — Permission denied when running `docker`
 
-**Symptom:** `permission denied while trying to connect to the Docker daemon socket`
-
-**Fix:** Add your user to the `docker` group and re-login:
-
-```bash
-sudo usermod -aG docker $USER
-newgrp docker
-```
-If the problem persists you may have to add your user to docker jenkins and change the permissions on the file:
-```
-usermod -aG docker jenkins
-usermod -aG root jenkins
-chmod 664 /var/run/docker.sock
-```
 
 ### Fedora — `docker.service` fails to start
 
