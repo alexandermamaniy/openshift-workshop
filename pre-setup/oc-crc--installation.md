@@ -104,7 +104,7 @@ Once installed we can configure the crc cluster.
 
 ```
 crc config set disk-size 80
-crc config set cpu 8
+crc config set cpus 8
 crc config set memory 15360
 
 # One-time host configuration
