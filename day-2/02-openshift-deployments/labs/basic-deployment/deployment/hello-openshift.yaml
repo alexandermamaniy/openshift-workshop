@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
         - name: web
-          image: quay.io/ayucra/origin-hello-openshift:latest
+          image: image-registry.openshift-image-registry.svc:5000/openshift/origin-hello-openshift:latest
           ports:
             - containerPort: 8080
