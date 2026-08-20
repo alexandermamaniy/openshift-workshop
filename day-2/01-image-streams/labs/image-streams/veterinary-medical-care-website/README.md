@@ -33,7 +33,16 @@ A static landing page for a pet care clinic, served with **Node.js + Express** i
 docker build -t petcare-app:latest .
 
 # Run the container
-docker run -p 8080:8080 petcare-app:latest
+docker run -d -p 8080:8080 petcare-app:latest
+
+# list container
+docker ps
+
+# stop container
+docker stop <CONTAINER_ID>
+
+# delete container
+docker rm <CONTAINER_ID>
 ```
 
 Open in your browser: [http://localhost:8080](http://localhost:8080)

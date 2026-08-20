@@ -33,33 +33,31 @@ A landing page for a car rental service, served with **Node.js + Express** insid
 docker build -t rent-car-app:latest .
 
 # Run the container
-docker run -p 8080:8080 rent-car-app:latest
+docker run -d -p 8080:8080 rent-car-app:latest
+
+# list container
+docker ps
+
+# stop container
+docker stop <CONTAINER_ID>
+
+# delete container
+docker rm <CONTAINER_ID>
 ```
 
 Open in your browser: [http://localhost:8080](http://localhost:8080)
 
 ---
 
-## How the Dockerfile works
-
-The build uses a **multi-stage** approach — no Node.js required on the host:
-
-| Stage | Base image | Purpose |
-|---|---|---|
-| `builder` | `node:20-alpine` | Installs npm dependencies |
-| `runtime` | `node:20-alpine` | Copies only `node_modules` + app code |
-
-The final image runs as `USER node` (non-root) on port `8080`.
-
----
 
 ## Deploy to OpenShift internal registry
 
 Replace `<username>` with your assigned username 
 
 ```bash
+export OC_USER=<username>
 export REGISTRY=default-route-openshift-image-registry.apps.rosa.ibm-rh-workshop.bern.p3.openshiftapps.com
-export NAMESPACE=<username>-workshop
+export NAMESPACE=$OC_USER-workshop
 export IMAGE=rent-car-app
 ```
 
@@ -81,6 +79,9 @@ docker build -t ${IMAGE}:latest .
 
 ```bash
 docker tag ${IMAGE}:latest ${REGISTRY}/${NAMESPACE}/${IMAGE}:latest
+
+# get image tag
+docker images | grep -i ${REGISTRY}/${NAMESPACE}/${IMAGE}:latest
 ```
 
 ### Step 4 — Log in to the OpenShift registry
@@ -96,8 +97,8 @@ docker login -u $(oc whoami) -p $(oc whoami --show-token) ${REGISTRY}
 > Required before pushing — the push will fail with `500 Internal Server Error` without this.
 
 ```bash
-oc create imagestream ${IMAGE} -n ${NAMESPACE}
 oc new-project ${NAMESPACE}
+oc create imagestream ${IMAGE} -n ${NAMESPACE}
 ```
 
 ### Step 6 — Push the image
@@ -129,6 +130,7 @@ oc new-app \
 
 # Expose with HTTPS Route (HTTP redirects to HTTPS automatically)
 oc expose svc/${IMAGE} --port=8080 -n ${NAMESPACE}
+
 oc patch route ${IMAGE} -n ${NAMESPACE} \
   --type=merge \
   -p '{"spec":{"tls":{"termination":"edge","insecureEdgeTerminationPolicy":"Redirect"}}}'
