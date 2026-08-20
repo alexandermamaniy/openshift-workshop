@@ -22,7 +22,7 @@ Unlike Deployments, a StatefulSet guarantees:
 ### 0. Set your namespace variable
 
 ```bash
-export NAMESPACE=<username>-statefulset
+export NAMESPACE=$(oc whoami)-statefulset
 ```
 
 ---
