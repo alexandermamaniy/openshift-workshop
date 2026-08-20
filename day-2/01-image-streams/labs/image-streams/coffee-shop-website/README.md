@@ -55,7 +55,7 @@ Open in your browser: [http://localhost:8080](http://localhost:8080)
 Replace `<username>` with your assigned username
 
 ```bash
-export OC_USER=<username>
+export OC_USER=$(oc whoami)
 export REGISTRY=default-route-openshift-image-registry.apps.rosa.ibm-rh-workshop.bern.p3.openshiftapps.com
 export NAMESPACE=$OC_USER-workshop
 export IMAGE=coffee-shop-app
