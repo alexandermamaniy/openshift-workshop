@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: db
-        image: quay.io/ayucra/postgres:15-alpine
+        image: image-registry.openshift-image-registry.svc:5000/openshift/postgres:15-alpine
         ports:
         - containerPort: 5432
         env:

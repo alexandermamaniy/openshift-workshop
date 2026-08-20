@@ -28,7 +28,7 @@ Instead of hardcoding values like database names, passwords or URLs directly in 
 ### 0. Set your namespace variable
 
 ```bash
-export NAMESPACE=<username>-configmap-secrets
+export NAMESPACE=$(oc whoami)-configmap-secrets
 ```
 
 ---
