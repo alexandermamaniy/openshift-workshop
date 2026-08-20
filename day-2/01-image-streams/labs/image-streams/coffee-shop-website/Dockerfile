@@ -1,4 +1,4 @@
-FROM node:20-alpine
+FROM quay.io/ayucra/node:20-alpine
 
 WORKDIR /usr/src/app
 
