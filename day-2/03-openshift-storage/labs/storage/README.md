@@ -17,10 +17,16 @@ By default, any data written inside a container is **ephemeral**, it is lost as 
 
 ## Lab steps
 
+### 0. Set your namespace variable
+
+```bash
+export NAMESPACE=$(oc whoami)-storage
+```
+
 ### 1. Create the project and resources
 
 ```bash
-oc new-project <username>-storage
+oc new-project $NAMESPACE
 
 cd pvc-demo/
 
@@ -28,7 +34,7 @@ oc create -f simple-pvc.yaml
 oc create -f deployment-with-pvc.yaml
 
 # Verify the PVC is Bound and the pod is Running
-oc get pvc,deployment,pod -n <username>-storage
+oc get pvc,deployment,pod -n $NAMESPACE
 ```
 
 > The PVC status should show `Bound`,  meaning OpenShift automatically provisioned and attached a PersistentVolume to it.
@@ -59,13 +65,13 @@ Type `exit` to leave the shell.
 Scale the Deployment to 0 replicas, this terminates and removes the running pod:
 
 ```bash
-oc scale deployment/pvc-app --replicas=0 -n <username>-storage
+oc scale deployment/pvc-app --replicas=0 -n $NAMESPACE
 ```
 
 Scale back up to 1 — OpenShift creates a brand new pod and re-attaches the same PVC:
 
 ```bash
-oc scale deployment/pvc-app --replicas=1 -n <username>-storage
+oc scale deployment/pvc-app --replicas=1 -n $NAMESPACE
 ```
 
 ---
@@ -75,7 +81,7 @@ oc scale deployment/pvc-app --replicas=1 -n <username>-storage
 Wait for the new pod to reach `Running` state, then open a shell again:
 
 ```bash
-oc get pod -n <username>-storage -w
+oc get pod -n $NAMESPACE -w
 
 oc rsh <pvc-app-pod-name>
 ```

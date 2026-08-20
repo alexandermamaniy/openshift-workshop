@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: web
-          image: registry.access.redhat.com/ubi9/ubi-minimal
+          image: image-registry.openshift-image-registry.svc:5000/openshift/ubi-minimal:latest
           command: ["/bin/bash", "-c", "--"]
           args: ["while true; do echo \"loop\" ; done"]
           volumeMounts:
