@@ -148,7 +148,8 @@ oc -n $NAMESPACE rsh demo-db-0
 ```
 
 ```bash
-psql -U workshop -d workshopdb
+echo $POSTGRES_PASSWORD
+psql -U $POSTGRES_USER   -d $POSTGRES_DB
 ```
 
 ```sql
