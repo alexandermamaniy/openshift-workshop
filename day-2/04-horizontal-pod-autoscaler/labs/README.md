@@ -30,7 +30,7 @@ Instead of manually scaling your app, the HPA continuously monitors resource usa
 ### 0. Set your namespace variable
 
 ```bash
-export NAMESPACE=<username>-hpa
+export NAMESPACE=$(oc whoami)-hpa
 ```
 
 ---
@@ -102,7 +102,7 @@ oc run loadgen \
   --image=quay.io/ayucra/loadgen:latest \
   --restart=Never \
   --rm -it \
-  -- -z 5m -c 100 \
+  -- -z 4m -c 100 \
   http://$(oc get route hpa-demo -n $NAMESPACE -o jsonpath='{.spec.host}')
 ```
 
