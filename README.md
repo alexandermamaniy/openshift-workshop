@@ -48,13 +48,6 @@ Understand the fundamental differences between virtual machines and containers, 
 - What is a container? Namespaces, cgroups, and the Linux kernel
 - Use cases for VMs vs containers
 
-Explore the architecture patterns that underpin cloud-native applications.
-
-- **Microservices** - decomposing monoliths into independently deployable services
-- **Serverless** - event-driven functions on AWS Lambda, Azure Functions, IBM Cloud Functions, GCP Cloud Run; OpenShift Serverless integration
-- **Autoscaling** - horizontal scaling vs vertical scaling
-- **Automation & CI/CD** - pipeline-driven delivery from code commit to production
-
 ---
 
 **02 - Introduction to Docker**
