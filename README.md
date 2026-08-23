@@ -42,6 +42,7 @@ An introduction to containerization concepts, modern application architecture, h
 ### Session Summaries
 
 **01 - Introduction to Containerization**
+
 Understand the fundamental differences between virtual machines and containers, and when to use each.
 
 - What is virtualization? Hypervisors, VMs, and their use cases
@@ -51,6 +52,7 @@ Understand the fundamental differences between virtual machines and containers, 
 ---
 
 **02 - Introduction to Docker**
+
 Build and run a containerized web application using Docker.
 
 - What is a Container Image - anatomy of a `Dockerfile`, layers, and build cache
@@ -92,6 +94,7 @@ Covers core OpenShift concepts through a series of progressive hands-on labs.
 ### Lab Summaries
 
 **01 - Introduction to OpenShift & Image Streams**
+
 Build container images locally, push them to the OpenShift internal registry via Image Streams, and deploy them as running applications on the cluster.
 
 - Build and tag Docker images for three sample web apps (coffee shop, rent-a-car, veterinary clinic)
@@ -103,6 +106,7 @@ Build container images locally, push them to the OpenShift internal registry via
 ---
 
 **02 - OpenShift Deployments**
+
 Deploy a containerized application to OpenShift using three different approaches, then manage configuration and stateful workloads.
 
 - **Basic Deployment** - deploy `hello-openshift` imperatively (CLI), declaratively (YAML), and via the Web Console; expose with HTTPS Route
@@ -112,6 +116,7 @@ Deploy a containerized application to OpenShift using three different approaches
 ---
 
 **03 - OpenShift Storage**
+
 Understand the difference between ephemeral and persistent storage and prove that data survives pod restarts.
 
 - Create a `PersistentVolumeClaim` (PVC) backed by `gp3-csi` storage
@@ -121,6 +126,7 @@ Understand the difference between ephemeral and persistent storage and prove tha
 ---
 
 **04 - Horizontal Pod Autoscaler**
+
 Configure automatic scaling based on CPU utilization and observe the HPA react in real time.
 
 - Deploy the `hpa-demo` application with CPU/memory resource requests and limits
@@ -131,6 +137,7 @@ Configure automatic scaling based on CPU utilization and observe the HPA react i
 ---
 
 **05 - CI/CD with OpenShift Pipelines**
+
 Introduction to building automated CI/CD pipelines natively in OpenShift using Tekton.
 
 - Explore the demo application and pipeline configuration
@@ -166,6 +173,7 @@ Complete **Lab 00** first to set up your environment. Then follow the labs seque
 ### Session Summaries
 
 **01 - IBM Products on OpenShift**
+
 Explore the IBM product portfolio running natively on OpenShift.
 
 - OpenShift Virtualization on IBM Z
@@ -175,6 +183,7 @@ Explore the IBM product portfolio running natively on OpenShift.
 ---
 
 **02 - Container Options in IBM**
+
 Overview of container deployment options available within the IBM ecosystem.
 
 - zCX (Docker and OpenShift)
@@ -184,6 +193,7 @@ Overview of container deployment options available within the IBM ecosystem.
 ---
 
 **03 - Introduction to OpenShift AI**
+
 Understand the AI/ML platform built into OpenShift and the concepts that power it.
 
 - What is **RAG** (Retrieval-Augmented Generation) and how it works
@@ -193,6 +203,7 @@ Understand the AI/ML platform built into OpenShift and the concepts that power i
 ---
 
 **04 - RAG with OGX (Open GenAI Stack)**
+
 Hands-on walkthrough building an end-to-end RAG pipeline using OGX.
 
 - Setting up the OpenShift AI environment, workbenches, and feature flags
