@@ -1,46 +1,45 @@
-# Docker Instructions - IBMeetingU
+# Lab: Getting Started with Docker
 
-## Build the image
+
+Start from zero and learn Docker's core building blocks. You'll run pre-built
+containers, write a `Dockerfile` to package a Node.js app, build your own
+image, and see container immutability and isolation in action.
+
+## Launch the lab
+
+1. Start the labspace:
 
 ```bash
-cd day-1/introduction-to-docker/lab
-docker build -t ibmeetingu:latest .
+docker compose -p labspace -f oci://dockersamples/labspace-container-getting-started up -d
 ```
 
-## Run the container
+2. Open your browser to http://localhost:3030.
+
+3. When you're done, tear down the labspace:
 
 ```bash
-docker run -d -p 8080:80 --name ibmeetingu ibmeetingu:latest
+docker compose -p labspace down
 ```
 
-## Access the application
+## What you'll learn
 
-Open your browser at: http://localhost:8080
+By the end of this Labspace, you will have completed the following:
 
-## Useful commands
+- Understand what containers are and how they differ from virtual machines
+- Run containers in the background, inspect their logs and filesystem, and manage their lifecycle
+- Write a `Dockerfile` to package an application, using layer caching for fast rebuilds
+- Build a custom image with `docker build` and run it as a container
+- Optionally publish your image to Docker Hub
 
-### View container logs
-```bash
-docker logs ibmeetingu
-```
+## Modules
 
-### Stop the container
-```bash
-docker stop ibmeetingu
-```
+| #   | Module                    | Description                                                                    |
+| --- | ------------------------- | ------------------------------------------------------------------------------ |
+| 1   | Welcome to Docker         | Introduction to containers and running your first `hello-world` container      |
+| 2   | Running Containers        | Launch Nginx, inspect logs and internals, and manage the container lifecycle   |
+| 3   | Building Your First Image | Write a `Dockerfile` and build a custom image from a Node.js app               |
+| 4   | Running Your App          | Run your image, explore container isolation, and optionally push to Docker Hub |
+| 5   | Wrap-up                   | Summary of key concepts and next steps                                         |
 
-### Remove the container
-```bash
-docker rm ibmeetingu
-```
-
-### Remove the image
-```bash
-docker rmi ibmeetingu:latest
-```
-
-## Notes
-
-- The application is served on port 80 inside the container
-- It's mapped to port 8080 on your local machine
-- Uses nginx:alpine as base (lightweight image)
+## More examples here! 
+https://docs.docker.com/guides/
