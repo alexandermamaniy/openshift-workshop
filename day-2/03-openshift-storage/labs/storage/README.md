@@ -4,6 +4,10 @@
 By default, any data written inside a container is **ephemeral**, it is lost as soon as the pod is deleted or restarted. Persistent storage solves this by attaching an external volume to the pod that survives restarts, rescheduling, and scaling events.
 
 ---
+## Overview
+
+<img src="images/storage.png" alt="" width="100%"/>
+---
 
 
 ## Files
