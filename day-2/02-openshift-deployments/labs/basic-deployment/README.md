@@ -192,7 +192,8 @@ Fill in the form with the following values:
 - **Name:** `hello-openshift`
 - **Service:** `hello-openshift`
 - **Target port:** `8080`
-- **Security:** check **Secure route**
+
+Tick the **Secure Route** box to show more information, then fill in:
 - **TLS termination:** `Edge`
 - **Insecure traffic:** `Redirect`
 
@@ -207,13 +208,6 @@ Once the Route is created, click the URL shown in the **Location** column to ope
 <img src="images/image-9.png" alt="Route URL" width="100%"/>
 
 > 🔒 HTTP requests are automatically redirected to HTTPS.
-
-**Clean up** when you are done:
-
-Navigate to **Home → Projects**, find `<username>-demo-app`, click the three-dot menu and select **Delete Project**.
-
-
-
 
 ## 4. Access the application
 
@@ -230,4 +224,10 @@ https://hello-openshift-<username>-demo-app.apps.<cluster-domain>
 ```
 
 > 🔒 HTTP requests are automatically redirected to HTTPS.
+
+## 5. Clean up
+
+When you are done, delete the project:
+
+Navigate to **Home → Projects**, find `<username>-demo-app`, click the three-dot menu and select **Delete Project**.
 
