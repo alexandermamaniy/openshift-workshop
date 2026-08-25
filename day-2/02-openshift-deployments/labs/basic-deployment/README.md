@@ -57,7 +57,38 @@ oc new-project $NAMESPACE
 
 ## 3. Deploy the application
 
-### Option A — Imperative (step by step)
+There are three ways to deploy the application. **Option A (declarative YAML) is the recommended starting point** for this lab.
+
+Try all three options if you can. Each one produces the same result; the goal is to see which workflow you are more comfortable with. Clean up after each option before starting the next.
+
+### Option A — Declarative (recommended)
+
+Use this approach in real projects. All resources are defined in YAML files and applied at once.
+
+The following files are already provided in the `deployment/` directory:
+
+| File | What it creates |
+|---|---|
+| `hello-openshift.yaml` | `Deployment` — runs 2 replicas of the app |
+| `service-route.yaml` | `Service` + `Route` with HTTPS edge termination |
+
+```bash
+# Apply all manifests in the current directory
+oc apply -f . -n $NAMESPACE
+
+# Verify everything is running
+oc get pods,svc,route -n $NAMESPACE
+```
+
+**Clean up** when you are done:
+
+```bash
+oc delete -f . -n $NAMESPACE
+```
+
+---
+
+### Option B — Imperative (step by step)
 
 Use this approach to understand what each resource does individually.
 
@@ -87,33 +118,6 @@ oc describe deployment/hello-openshift -n $NAMESPACE
 
 ```bash
 oc delete route,service,deployment hello-openshift -n $NAMESPACE
-```
-
----
-
-### Option B — Declarative (recommended)
-
-Use this approach in real projects. All resources are defined in YAML files and applied at once.
-
-The following files are already provided in the `deployment/` directory:
-
-| File | What it creates |
-|---|---|
-| `hello-openshift.yaml` | `Deployment` — runs 2 replicas of the app |
-| `service-route.yaml` | `Service` + `Route` with HTTPS edge termination |
-
-```bash
-# Apply all manifests in the current directory
-oc apply -f . -n $NAMESPACE
-
-# Verify everything is running
-oc get pods,svc,route -n $NAMESPACE
-```
-
-**Clean up** when you are done:
-
-```bash
-oc delete -f . -n $NAMESPACE
 ```
 
 ---
