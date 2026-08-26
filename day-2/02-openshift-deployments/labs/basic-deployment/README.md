@@ -57,7 +57,38 @@ oc new-project $NAMESPACE
 
 ## 3. Deploy the application
 
-### Option A — Imperative (step by step)
+There are three ways to deploy the application. **Option A (declarative YAML) is the recommended starting point** for this lab.
+
+Try all three options if you can. Each one produces the same result; the goal is to see which workflow you are more comfortable with. Clean up after each option before starting the next.
+
+### Option A — Declarative (recommended)
+
+Use this approach in real projects. All resources are defined in YAML files and applied at once.
+
+The following files are already provided in the `deployment/` directory:
+
+| File | What it creates |
+|---|---|
+| `hello-openshift.yaml` | `Deployment` — runs 2 replicas of the app |
+| `service-route.yaml` | `Service` + `Route` with HTTPS edge termination |
+
+```bash
+# Apply all manifests in the current directory
+oc apply -f . -n $NAMESPACE
+
+# Verify everything is running
+oc get pods,svc,route -n $NAMESPACE
+```
+
+**Clean up** when you are done:
+
+```bash
+oc delete -f . -n $NAMESPACE
+```
+
+---
+
+### Option B — Imperative (step by step)
 
 Use this approach to understand what each resource does individually.
 
@@ -87,33 +118,6 @@ oc describe deployment/hello-openshift -n $NAMESPACE
 
 ```bash
 oc delete route,service,deployment hello-openshift -n $NAMESPACE
-```
-
----
-
-### Option B — Declarative (recommended)
-
-Use this approach in real projects. All resources are defined in YAML files and applied at once.
-
-The following files are already provided in the `deployment/` directory:
-
-| File | What it creates |
-|---|---|
-| `hello-openshift.yaml` | `Deployment` — runs 2 replicas of the app |
-| `service-route.yaml` | `Service` + `Route` with HTTPS edge termination |
-
-```bash
-# Apply all manifests in the current directory
-oc apply -f . -n $NAMESPACE
-
-# Verify everything is running
-oc get pods,svc,route -n $NAMESPACE
-```
-
-**Clean up** when you are done:
-
-```bash
-oc delete -f . -n $NAMESPACE
 ```
 
 ---
@@ -188,7 +192,8 @@ Fill in the form with the following values:
 - **Name:** `hello-openshift`
 - **Service:** `hello-openshift`
 - **Target port:** `8080`
-- **Security:** check **Secure route**
+
+Tick the **Secure Route** box to show more information, then fill in:
 - **TLS termination:** `Edge`
 - **Insecure traffic:** `Redirect`
 
@@ -203,13 +208,6 @@ Once the Route is created, click the URL shown in the **Location** column to ope
 <img src="images/image-9.png" alt="Route URL" width="100%"/>
 
 > 🔒 HTTP requests are automatically redirected to HTTPS.
-
-**Clean up** when you are done:
-
-Navigate to **Home → Projects**, find `<username>-demo-app`, click the three-dot menu and select **Delete Project**.
-
-
-
 
 ## 4. Access the application
 
@@ -226,4 +224,10 @@ https://hello-openshift-<username>-demo-app.apps.<cluster-domain>
 ```
 
 > 🔒 HTTP requests are automatically redirected to HTTPS.
+
+## 5. Clean up
+
+When you are done, delete the project:
+
+Navigate to **Home → Projects**, find `<username>-demo-app`, click the three-dot menu and select **Delete Project**.
 
