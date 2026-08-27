@@ -12,7 +12,7 @@ This lab walks you through using the Gen AI Studio in OpenShift AI to connect a 
 
 ## Prerequisites
 
-- [Lab 00 - OpenShift AI Setup](../../00-openshift-ai-setup/lab/) completed (including developer feature flags enabled)
+- [Lab 00 - OpenShift AI Setup](../../00-openshift-ai-setup/lab/README.md) completed (including developer feature flags enabled)
 - Remote model endpoint URL and API key (provided by your instructor)
 
 ## Steps
@@ -25,7 +25,7 @@ We need to register a model endpoint before we can use the playground, so we wil
 
 1.2. Click on the dropdown and select **AI asset endpoints**.
 
-1.3. Change the project to your project name.
+1.3. Change the project to your previously created project name.
 
 1.4. Click **Create endpoint**.
 
@@ -38,9 +38,9 @@ The model we will use is hosted remotely as a Model as a Service (MaaS). Instead
 2.1. Fill in the endpoint form with the following settings:
 
 - **Model type:** Inferencing model
-- **Model ID:** `<model-name>` (provided by instructor)
-- **Display name:** `<model-name>` (provided by instructor)
-- **URL:** `<endpoint URL for model>` (provided by instructor)
+- **Model ID:** `llama-scout-17b`
+- **Display name:** `llama-scout-17b`
+- **URL:** `https://maas-rhdp.apps.maas.redhatworkshops.io/v1`
 - **Token:** `<API key>` (provided by instructor)
 
 2.2. Click **Verify model** to check that the endpoint is reachable and the model exists.
@@ -82,7 +82,7 @@ When the playground was created, it generated a ConfigMap named `llama-stack-con
 4.6. Locate the `base_url` field that contains your model's URL endpoint. Directly underneath it, add the following field:
 
 ```yaml
-api_key: <API key provided by instructor>
+api_key: <API key provided by instructor (same token used for the llama-scout-17b model)>
 ```
 
 <img src="images/4.6.png" alt="Add API key to ConfigMap YAML" width="100%"/>
@@ -139,7 +139,7 @@ Tell me about the Rabbit that lives in Waterford City?
 
 <img src="images/7.3.png" alt="RAG response about Toffee" width="100%"/>
 
-### Step 8 - Experiment
+### Step 8 - Experiment (Optional)
 
 8.1. Try different questions to test the boundaries of what the model can retrieve.
 
@@ -153,4 +153,4 @@ Tell me about the Rabbit that lives in Waterford City?
 
 Now that you have seen RAG working through the UI, proceed to the next lab where you will build the same pipeline programmatically in a Jupyter notebook:
 
-- [Lab 02 - PDF Ingestion RAG](../../02-pdf-ingestion-rag/lab/)
+- [Lab 02 - PDF Ingestion RAG](../../02-pdf-ingestion-rag/lab/README.md)

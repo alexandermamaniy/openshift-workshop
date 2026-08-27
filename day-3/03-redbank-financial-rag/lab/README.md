@@ -2,7 +2,7 @@
 
 You have been hired to build an AI-powered customer support solution for Red Bank Financial — a fictional bank struggling with long queue times, limited 24/7 availability, and slow resolution times. Your task is to create a voice-enabled RAG agent that can handle customer enquiries by drawing on the bank's "About" page and FAQ documentation, simulating a real phone call experience using Speech-to-Text and Text-to-Speech models.
 
-In this lab, you will connect to the same LlamaStack distribution from previous labs, ingest Red Bank Financial's knowledge base, and build an intelligent agent that customers can speak to naturally. The pipeline uses a Whisper STT model to transcribe your voice, a RAG-powered agent to generate accurate answers from the knowledge base, and a TTS model to speak the response back — just like a real automated phone line, but powered by AI.
+In this lab, you will connect to the same LlamaStack distribution from previous labs, ingest Red Bank Financial's knowledge base, and build an intelligent agent that customers can speak to naturally. The pipeline uses a Whisper STT (Speech-To-Text) model to transcribe your voice, a RAG-powered agent to generate accurate answers from the knowledge base, and a TTS (Text-To-Speech) model to speak the response back — just like a real automated phone line, but powered by AI.
 
 ## Learning Outcomes
 
@@ -16,8 +16,8 @@ In this lab, you will connect to the same LlamaStack distribution from previous 
 
 ## Prerequisites
 
-- [Lab 00 - OpenShift AI Setup](../../00-openshift-ai-setup/lab/) completed
-- [Lab 01 - GenAI Playground & RAG](../../01-genai-playground-rag/lab/) completed (the LlamaStack distribution must be running)
+- [Lab 00 - OpenShift AI Setup](../../00-openshift-ai-setup/lab/README.md) completed
+- [Lab 01 - GenAI Playground & RAG](../../01-genai-playground-rag/lab/README.md) completed
 - Familiarity with the concepts from Lab 02
 - Whisper STT model endpoint URL and API key (provided by your instructor)
 
@@ -39,11 +39,9 @@ In this lab, you will connect to the same LlamaStack distribution from previous 
 
 ### Step 2 - Install Dependencies
 
-We need a few additional libraries for this lab: `lab-mic` for browser-based audio recording, and `sounddevice`/`scipy` for audio processing.
+We need a few additional libraries for this lab: `lab-mic` for browser-based audio recording, and `sounddevice`/`scipy` for audio processing. We'll install them in the next steps.
 
 2.1. In the first cell, enter and run:
-
-> **Tip:** For each new cell you add, consider adding a **Markdown cell** above it with a short title (e.g. `## Install Dependencies`, `## Voice Pipeline`). This makes your notebook easier to read and navigate. To add a Markdown cell, click the **+** button and change the cell type from "Code" to "Markdown" in the dropdown.
 
 ```python
 %pip install llama_stack==0.7.2
@@ -51,6 +49,8 @@ We need a few additional libraries for this lab: `lab-mic` for browser-based aud
 %pip install sounddevice
 %pip install lab-mic
 ```
+
+> **Tip:** For each new cell you add, consider adding a **Markdown cell** above it with a short title (e.g. `## Install Dependencies`, `## Voice Pipeline`). This makes your notebook easier to read and navigate. To add a Markdown cell, click the **+** button and change the cell type from "Code" to "Markdown" in the dropdown.
 
 2.2. Click **Kernel** > **Restart Kernel and Clear Outputs of All Cells** for the libraries to take effect.
 
@@ -61,11 +61,11 @@ We need a few additional libraries for this lab: `lab-mic` for browser-based aud
 ```python
 from llama_stack_client import LlamaStackClient
 
-client = LlamaStackClient(base_url="http://<service-name>.<your-namespace>:8321")
+client = LlamaStackClient(base_url="http://lsd-genai-playground-service.<your-namespace>:8321")
 client.models.list()
 ```
 
-Replace `<service-name>` and `<your-namespace>` with your LlamaStack service values
+Replace `<your-namespace>` with your project namespace name
 
 Expected output:
 
@@ -219,7 +219,7 @@ Created vector store with ID: redbank_knowledge_base
 
 This agent has custom system instructions tailored for a customer-facing banking assistant. It uses the `file_search` tool to retrieve relevant information from the knowledge base before responding.
 
-7.1. In a new cell, enter and run:
+7.1. In a new cell, enter and run (no output is expected as we are only defining the agent):
 
 ```python
 def run_agent(text: str | None = None):
@@ -284,11 +284,22 @@ mic.display()
 
 <img src="images/8.1.png" alt="Lab-mic recording widget in Jupyter notebook" width="80%"/>
 
-> **Note:** If the recording widget does not appear, try refreshing the page.
+> **Note:** If the recording widget does not appear, save your notebook (or you might lose your changes), then try refreshing the page.
+
+8.3. In a new cell, enter and run the following to save the recorded audio to a WAV file:
+
+```python
+filename="input.wav"
+
+audio_data = mic.get_result()
+write(filename, 24000, audio_data)
+time.sleep(15)
+print(f"✅ Audio saved: {filename}")
+```
 
 ### Step 9 - Run the Voice Pipeline: STT, Agent, and TTS
 
-This cell ties everything together. It saves the recording, transcribes it using the Whisper STT model, passes the transcribed text to the RAG agent, and converts the agent's response to speech using a free TTS API.
+This cell ties everything together. It transcribes the recording using the Whisper STT model, passes the transcribed text to the RAG agent, and converts the agent's response to speech using a free TTS API.
 
 9.1. In a new cell, enter and run:
 
@@ -306,17 +317,9 @@ from IPython.display import Audio, display
 WHISPER_URL = "<whisper-endpoint-url>"
 WHISPER_API_KEY = "<whisper-api-key>"
 TTS_URL = "https://api.tts.ai/v1/tts/"
-LLAMASTACK_URL = "http://<service-name>.<your-namespace>:8321"
+LLAMASTACK_URL = "http://lsd-genai-playground-service.<your-namespace>:8321" # Replace <your-namespace> with your project namespace name
 
 client = LlamaStackClient(base_url=LLAMASTACK_URL)
-
-def save_recording(filename="input.wav"):
-    """Save the browser microphone recording as a WAV file."""
-    audio_data = mic.get_result()
-    write(filename, 24000, audio_data)
-    time.sleep(10)  # Allow time for the WAV file to fully flush to disk
-    print(f"✅ Audio recorded: {filename}")
-    return filename
 
 def transcribe_audio(filename):
     """Send audio to the Whisper STT model and return the transcribed text."""
@@ -332,14 +335,13 @@ def transcribe_audio(filename):
     return text
 
 def speak_response(text):
-    """Convert text to speech using TTS.ai and play it in the notebook."""
     print(f"🔊 Sending to TTS: {text[:50]}...")
     res = requests.post(
         TTS_URL,
         json={
             "text": text,
-            "voice": "af_heart",   # Natural female voice
-            "model": "kokoro",     # Free model, no API key needed
+            "voice": "af_heart",
+            "model": "kokoro",
             "format": "mp3",
             "speed": 1.0,
         },
@@ -347,28 +349,39 @@ def speak_response(text):
     if res.status_code != 200:
         print(f"TTS Error: {res.text}")
         return
-    # TTS.ai returns a URL to download the generated audio
-    result_url = res.json().get("result_url")
+
+    data = res.json()
+    result_url = data.get("result_url")
+
+    # API is async: cached requests return result_url immediately,
+    # new requests return a uuid and queue the job on the CDN
     if not result_url:
-        print("No audio URL returned")
+        uuid = data.get("uuid")
+        cdn_url = f"https://cdn.tts.ai/{uuid}/tts_output.mp3"
+        for _ in range(15):
+            time.sleep(3)
+            audio_res = requests.get(cdn_url)
+            if audio_res.status_code == 200:
+                display(Audio(data=audio_res.content, autoplay=True))
+                return
+        print("TTS timed out")
         return
+
     audio_res = requests.get(result_url)
     audio_res.raise_for_status()
+    print("✅ Audio ready")
     display(Audio(data=audio_res.content, autoplay=True))
-
-# Run the full pipeline: Record → Transcribe → Agent → Speak
+    
 if __name__ == "__main__":
-    wav = save_recording()
-    prompt = transcribe_audio(wav)
+    prompt = transcribe_audio(filename)
     if prompt:
         agent_reply = run_agent(prompt)
         speak_response(agent_reply)
 ```
 
-Replace `<whisper-endpoint-url>`, `<whisper-api-key>`, `<service-name>`, and `<your-namespace>` with the values provided by your instructor.
+Replace `<whisper-endpoint-url>`, `<whisper-api-key>` with the values provided by your instructor.
 
 9.2. After running the cell, you should see:
-- The audio being saved
 - The transcription of your question
 - The agent's response retrieved from the knowledge base
 - An audio player with the spoken response
@@ -376,7 +389,6 @@ Replace `<whisper-endpoint-url>`, `<whisper-api-key>`, `<service-name>`, and `<y
 Expected output (example with the question "Who founded Red Bank Financial?"):
 
 ```
-✅ Audio recorded: input.wav
 Red Bank Financial Customer> Who founded Red Bank Financial?
 response> Red Bank Financial was founded in 2025...
 🔊 Sending to TTS: Red Bank Financial was founded in 2025...
