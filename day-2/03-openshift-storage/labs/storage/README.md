@@ -56,8 +56,8 @@ oc rsh <pvc-app-pod-name>
 Once inside the container, write a file to the mounted volume at `/data`:
 
 ```bash
-sh-5.1$ echo "Important data!" > /data/persistent_data.txt
-sh-5.1$ cat /data/persistent_data.txt
+echo "Important data!" > /data/persistent_data.txt
+cat /data/persistent_data.txt
 ```
 
 Type `exit` to leave the shell.
@@ -93,7 +93,7 @@ oc rsh <pvc-app-pod-name>
 Check that the file is still there:
 
 ```bash
-sh-5.1$ cat /data/persistent_data.txt
+cat /data/persistent_data.txt
 # Important data!
 ```
 
