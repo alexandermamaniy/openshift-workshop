@@ -11,7 +11,7 @@ You will also expose the app via a secure HTTPS Route.
 Make sure you are in the lab directory before running any command:
 
 ```bash
-cd day-2/01-introduction-to-openshift/lab/basic-deployment/deployment/
+cd /openshift-workshop/day-2/02-openshift-deployments/labs/basic-deployment/deployment
 ```
 
 ---
