@@ -113,6 +113,6 @@ Congratulations! Your OpenShift AI environment is fully set up and ready to go. 
 
 Proceed to the following labs in order:
 
-- [Lab 01 - GenAI Playground & RAG](../01-genai-playground-rag/)
-- [Lab 02 - PDF Ingestion RAG](../02-pdf-ingestion-rag/)
-- [Lab 03 - Red Bank Financial RAG](../03-redbank-financial-rag/)
+- [Lab 01 - GenAI Playground & RAG](../../01-genai-playground-rag/lab/README.md)
+- [Lab 02 - PDF Ingestion RAG](../../02-pdf-ingestion-rag/lab/README.md)
+- [Lab 03 - Red Bank Financial RAG](../../03-redbank-financial-rag/lab/README.md)

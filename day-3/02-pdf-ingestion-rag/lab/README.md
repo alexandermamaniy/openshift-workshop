@@ -13,8 +13,8 @@ This lab takes the RAG concept from Lab 01 and implements it programmatically in
 
 ## Prerequisites
 
-- [Lab 00 - OpenShift AI Setup](../../00-openshift-ai-setup/lab/) completed
-- [Lab 01 - GenAI Playground & RAG](../../01-genai-playground-rag/lab/) completed (the LlamaStack distribution must be running)
+- [Lab 00 - OpenShift AI Setup](../../00-openshift-ai-setup/lab/README.md) completed
+- [Lab 01 - GenAI Playground & RAG](../../01-genai-playground-rag/lab/README.md) completed (the LlamaStack distribution must be running)
 
 ## Steps
 
@@ -28,13 +28,13 @@ To connect to the LlamaStack distribution from our notebook, we need to find its
 
 1.3. Make sure you are viewing your project namespace.
 
-1.4. Find the service for your LlamaStack distribution and note its name. The URL will follow this format:
+1.4. Find the service for your LlamaStack distribution and note its name (i.e.: lsd-genai-playground-service). The URL will follow this format:
 
 ```
 http://<service-name>.<your-namespace>:8321
 ```
 
-Keep this URL handy — you will use it in the next steps.
+**Keep this URL handy — you will use it in the next steps.**
 
 ### Step 2 - Create a New Notebook
 
@@ -91,7 +91,7 @@ We need to select which model to use for generating responses (the LLM) and whic
 ```python
 from llama_stack_client import LlamaStackClient
 
-client = LlamaStackClient(base_url="http://<service-name>.<your-namespace>:8321")
+client = LlamaStackClient(base_url="http://lsd-genai-playground-service.<your-namespace>:8321")
 
 models = client.models.list()
 
@@ -108,7 +108,7 @@ print(model_id)
 print(embedding_model_id)
 ```
 
-Replace `<your-ai-model-id>` with your model ID — you will find it in the output from the previous step when listing models.
+Replace `<your-ai-model-id>` with the llama-scout-17b model ID — you will find it in the output from the previous step when listing models.
 
 5.2. Verify both model IDs are printed correctly. The output should look similar to:
 
@@ -174,7 +174,7 @@ from llama_stack_client import Agent, AgentEventLogger, LlamaStackClient
 import requests
 
 vector_db_name = "my_knowledge_base"
-client = LlamaStackClient(base_url="http://<service-name>.<your-namespace>:8321")
+client = LlamaStackClient(base_url="http://lsd-genai-playground-service.<your-namespace>:8321")
 
 # List of PDF URLs to ingest
 sources = ["https://raw.githubusercontent.com/ChristianZaccaria/redbank-kb/main/christian-about.pdf"]
@@ -287,21 +287,12 @@ run_agent("What does Christian Zaccaria like doing?")
 
 9.3. Observe that the agent now provides accurate answers by retrieving relevant chunks from the PDF. Compare this to the response in Step 6 where the model had no context.
 
-### Step 10 - Experiment
+### Step 10 - Experiment (Optional)
 
 10.1. Try asking questions that are not covered in the PDF and observe how the agent handles them.
-
-10.2. Create your own GitHub repository and upload one or more PDF files about any topic — for example, your hobbies, favourite music, a recipe book, a research paper, or meeting notes. Then add the raw URLs to the `sources` list in Step 7 to ingest them. You can add as many as you like:
-
-```python
-sources = [
-    "https://raw.githubusercontent.com/<your-username>/<your-repo>/main/document-1.pdf",
-    "https://raw.githubusercontent.com/<your-username>/<your-repo>/main/document-2.pdf",
-]
-```
 
 ## Next Steps
 
 You have now built a RAG pipeline programmatically. In the next lab, you will extend this into a full end-to-end voice-enabled assistant with Speech-to-Text and Text-to-Speech models:
 
-- [Lab 03 - Red Bank Financial RAG](../../03-redbank-financial-rag/lab/)
+- [Lab 03 - Red Bank Financial RAG](../../03-redbank-financial-rag/lab/README.md)
