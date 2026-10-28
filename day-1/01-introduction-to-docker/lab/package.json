@@ -1,0 +1,12 @@
+{
+  "name": "getting-started-app",
+  "version": "1.0.0",
+  "description": "A simple Express app for the Docker Getting Started lab",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
