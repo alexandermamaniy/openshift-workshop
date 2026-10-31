@@ -68,10 +68,10 @@ Now build your image. Make sure you're in the `project/` directory where your `D
 
 ```bash
 # build with your computer architecture
-docker build -t getting-started .
+docker build -t getting-started:latest .
 
 # It force to build a linux/amd64 container image
-docker build --platform linux/amd64 -t getting-started  .
+# docker build --platform linux/amd64 -t getting-started:latest  .
 ```
 
 Breaking it down:
