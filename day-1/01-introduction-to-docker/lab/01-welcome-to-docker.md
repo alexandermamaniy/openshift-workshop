@@ -55,4 +55,13 @@ That's the full container lifecycle in one command: pull, create, run, exit.
 > **Tip**
 > Notice the line "Unable to find image 'hello-world' locally" followed by "Pulling from library/hello-world". Docker transparently fetched the image from Docker Hub — you didn't have to install anything manually.
 
+## Clean Up
+
+The container exited, but it still exists. Remove it and its image:
+
+```bash
+docker rm $(docker ps -aq --filter ancestor=hello-world)
+docker rmi hello-world
+```
+
 In the next section, you'll run something that stays up: a real web server.

@@ -71,7 +71,11 @@ docker run -d -p 3002:3000 --name my-app-v2 getting-started:v2
 Stop and remove all the containers you created in this section:
 
 ```bash
-docker stop my-app my-app-2 my-app-v2 && docker rm my-app my-app-2 my-app-v2
+docker stop my-app my-app-2 my-app-v2
+```
+
+```bash
+docker rm my-app my-app-2 my-app-v2
 ```
 
 ## (Optional) Push to Docker Hub
@@ -81,14 +85,14 @@ If you have a Docker Hub account, you can publish your image so it's accessible 
 Set your Docker Hub username and retag the image:
 
 ```bash
-docker tag getting-started <your-dockerhub-username>/getting-started
+docker tag getting-started <your-dockerhub-username>/getting-started:latest
 ```
 
 Log in and push:
 
 ```bash
 docker login
-docker push <your-dockerhub-username>/getting-started
+docker push <your-dockerhub-username>/getting-started:latest
 ```
 
 > **Warning**

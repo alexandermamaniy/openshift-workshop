@@ -3,6 +3,7 @@ const os = require('os');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const MESSAGE = process.env.MESSAGE || "This app is running inside a container.";
 
 app.get('/', (req, res) => {
   res.send(`<!DOCTYPE html>
@@ -72,7 +73,7 @@ app.get('/', (req, res) => {
 <body>
   <div class="card">
     <h1>🐳 Hello from Docker!</h1>
-    <p class="subtitle">This app is running inside a container.</p>
+    <p class="subtitle">${MESSAGE}</p>
     <span class="badge">Containerized</span>
     <div class="info-grid">
       <div class="info-row">
