@@ -48,6 +48,9 @@ spec:
         # The headless Service of the database StatefulSet
         - name: DB_HOST
           value: voting-db
+        # Listen on all interfaces so the Service can reach the pod
+        - name: BIND_ADDRESS
+          value: "0.0.0.0"
         livenessProbe:
           httpGet:
             path: /health

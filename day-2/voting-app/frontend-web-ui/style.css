@@ -2,7 +2,6 @@
   --light-blue: #e5f6ff;
   --ibm-blue: #0f62fe;
   --ibm-blue-hover: #0043ce;
-  --redhat-red: #ee0000;
   --text: #161616;
   --text-muted: #525252;
   --border: #c6c6c6;
@@ -34,7 +33,6 @@ body {
 /* Light blue banner with the title at the bottom, like the workshop slides */
 .banner {
   background: var(--light-blue);
-  border-bottom: 4px solid var(--redhat-red);
   padding: 3rem 0 1.5rem;
 }
 

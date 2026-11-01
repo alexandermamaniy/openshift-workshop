@@ -41,14 +41,21 @@ The browser only talks to nginx. nginx forwards every `/api/` request to the `vo
 
 ## Lab steps
 
-### 0. Use the voting project
-
-The Web UI calls the API by its Service name, so it must run in the **same project** as the database and the API. Deploy the [database](../database/README.md) and the [backend REST API](../backend-rest-api/README.md) first.
+### 0. Create the project and set the namespace variable
 
 ```bash
 export NAMESPACE=$(oc whoami)-voting-app
+oc new-project $NAMESPACE
+```
+
+The Web UI calls the API by its Service name, so it must run in the **same project** as the database and the API. Deploy the [database](../database/README.md) and the [backend REST API](../backend-rest-api/README.md) first, then come back here.
+
+```bash
+# Verify the API is ready before continuing:
 oc get deployment/voting-api service/voting-api -n $NAMESPACE
 ```
+
+> **Expected output:** both resources show as `Ready`. If you see `Error from server (NotFound)` it means the backend API has not been deployed yet — go to [backend-rest-api/README.md](../backend-rest-api/README.md) first and come back here once that step is done.
 
 ---
 

@@ -103,7 +103,7 @@ Open [`init-configmap.yaml`](init-configmap.yaml). The `01-init.sql` key holds t
 Always create the Secret and ConfigMaps **before** the StatefulSet, the pod will fail to start if the referenced resources do not exist.
 
 ```bash
-POSTGRES_PASSWORD="$(openssl rand -base64 18)" envsubst < secret.yaml | oc apply -n $NAMESPACE -f -
+# POSTGRES_PASSWORD="$(openssl rand -base64 18)" envsubst < secret.yaml | oc apply -n $NAMESPACE -f -
 
 oc apply -f configmap.yaml      -n $NAMESPACE
 oc apply -f secret.yaml      -n $NAMESPACE
