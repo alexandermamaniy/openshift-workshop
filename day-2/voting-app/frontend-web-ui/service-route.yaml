@@ -1,0 +1,33 @@
+# Service and Route for the voting Web UI.
+# This is the only public entry point of the voting app: the API and the
+# database stay internal.
+apiVersion: v1
+kind: Service
+metadata:
+  name: voting-web-ui
+  labels:
+    app: voting-web-ui
+spec:
+  selector:
+    app: voting-web-ui
+  ports:
+  - name: http
+    port: 8080
+    targetPort: 8080
+    protocol: TCP
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: voting-web-ui
+  labels:
+    app: voting-web-ui
+spec:
+  to:
+    kind: Service
+    name: voting-web-ui
+  port:
+    targetPort: http
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect

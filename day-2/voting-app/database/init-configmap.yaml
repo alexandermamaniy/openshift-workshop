@@ -1,0 +1,33 @@
+# Database initialization script: creates the tables and seeds the candidates.
+#
+# It is mounted in /docker-entrypoint-initdb.d, and the postgres image runs it
+# ONLY the first time the data volume is empty. It is idempotent anyway.
+# To change the candidates after the first start, delete the PVC (data-voting-db-0).
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: voting-db-init
+  labels:
+    app: voting-db
+data:
+  01-init.sql: |
+    CREATE TABLE IF NOT EXISTS candidate (
+      id          SERIAL PRIMARY KEY,
+      name        TEXT NOT NULL UNIQUE,
+      active      BOOLEAN NOT NULL DEFAULT true,
+      created_at  TIMESTAMPTZ NOT NULL DEFAULT now()
+    );
+
+    CREATE TABLE IF NOT EXISTS vote (
+      id            SERIAL PRIMARY KEY,
+      voter         TEXT NOT NULL UNIQUE,                    -- one vote per name
+      candidate_id  INT  NOT NULL REFERENCES candidate(id),  -- candidate must exist
+      created_at    TIMESTAMPTZ NOT NULL DEFAULT now(),
+      CONSTRAINT voter_normalized CHECK (voter = lower(btrim(voter)))
+    );
+
+    INSERT INTO candidate (name) VALUES
+      ('Candidate A'),
+      ('Candidate B'),
+      ('Blank vote')
+    ON CONFLICT (name) DO NOTHING;

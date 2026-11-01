@@ -1,0 +1,11 @@
+# Non-sensitive database configuration.
+# Credentials (user and password) live in the "voting-db-secret" Secret.
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: voting-db-config
+  labels:
+    app: voting-db
+data:
+  POSTGRES_DB: voting
+  PGDATA: /var/lib/postgresql/data/pgdata

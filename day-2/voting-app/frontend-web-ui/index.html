@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Student Election</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="banner">
+    <div class="container">
+      <p class="eyebrow">OpenShift workshop</p>
+      <h1>Student Election</h1>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="card">
+      <h2>Cast your vote</h2>
+      <form id="vote-form">
+        <label for="voter">Your name</label>
+        <input id="voter" name="voter" type="text" maxlength="50" required autocomplete="off">
+
+        <fieldset>
+          <legend>Candidate</legend>
+          <div id="candidates">Loading candidates...</div>
+        </fieldset>
+
+        <button type="submit">Vote</button>
+      </form>
+      <p id="message" role="status"></p>
+    </section>
+
+    <section class="card">
+      <h2>Results</h2>
+      <ul id="results"></ul>
+      <p id="total"></p>
+      <button type="button" id="refresh">Refresh results</button>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-row">
+      <p class="pod-info">Last API response served by pod: <code id="pod">-</code></p>
+      <div class="logos">
+        <img src="images/redhat-logo.png" alt="Red Hat" class="logo-redhat">
+        <img src="images/ibm-logo-cropped.png" alt="IBM" class="logo-ibm">
+      </div>
+    </div>
+  </footer>
+  <script src="app.js"></script>
+</body>
+</html>

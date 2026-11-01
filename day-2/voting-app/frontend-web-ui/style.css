@@ -1,0 +1,199 @@
+:root {
+  --light-blue: #e5f6ff;
+  --ibm-blue: #0f62fe;
+  --ibm-blue-hover: #0043ce;
+  --redhat-red: #ee0000;
+  --text: #161616;
+  --text-muted: #525252;
+  --border: #c6c6c6;
+  --success: #0e6027;
+  --error: #a2191f;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+  background: #ffffff;
+  color: var(--text);
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* Light blue banner with the title at the bottom, like the workshop slides */
+.banner {
+  background: var(--light-blue);
+  border-bottom: 4px solid var(--redhat-red);
+  padding: 3rem 0 1.5rem;
+}
+
+.eyebrow {
+  margin: 0 0 0.25rem;
+  font-size: 0.9rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+h1 {
+  margin: 0;
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+
+main {
+  flex: 1;
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+
+.card {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-top: 4px solid var(--ibm-blue);
+  padding: 1rem 1.5rem 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+h2 {
+  font-size: 1.4rem;
+  margin: 0.5rem 0 1rem;
+}
+
+label {
+  display: inline-block;
+  margin: 0.25rem 0.5rem 0.25rem 0;
+}
+
+label[for=voter] {
+  display: block;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+input[type=text] {
+  display: block;
+  width: 100%;
+  padding: 0.7rem;
+  margin-bottom: 1.25rem;
+  font: inherit;
+  background: var(--light-blue);
+  border: 0;
+  border-bottom: 2px solid var(--text-muted);
+}
+
+fieldset {
+  border: 1px solid var(--border);
+  margin: 0 0 1.25rem;
+  padding: 0.5rem 1rem 0.75rem;
+}
+
+legend {
+  padding: 0 0.5rem;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+input[type=radio] {
+  accent-color: var(--ibm-blue);
+}
+
+button {
+  background: var(--ibm-blue);
+  color: #ffffff;
+  border: 0;
+  padding: 0.8rem 1.6rem;
+  font: inherit;
+  cursor: pointer;
+}
+
+button:hover {
+  background: var(--ibm-blue-hover);
+}
+
+input:focus-visible,
+button:focus-visible {
+  outline: 3px solid var(--ibm-blue);
+  outline-offset: 2px;
+}
+
+#message {
+  min-height: 1.5rem;
+  margin: 1rem 0 0;
+}
+
+#message.ok {
+  color: var(--success);
+}
+
+#message.error {
+  color: var(--error);
+}
+
+#results {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1rem;
+}
+
+#results li {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.6rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+}
+
+#results li:nth-child(odd) {
+  background: var(--light-blue);
+}
+
+#total {
+  font-weight: 700;
+}
+
+/* White footer with the logos on the right, like the workshop slides */
+.site-footer {
+  border-top: 1px solid var(--border);
+  padding: 1rem 0;
+}
+
+.footer-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.pod-info {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.logos {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.logo-redhat {
+  height: 32px;
+  width: auto;
+}
+
+.logo-ibm {
+  height: 32px;
+  width: auto;
+}

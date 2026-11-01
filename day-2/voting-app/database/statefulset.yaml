@@ -1,0 +1,95 @@
+# PostgreSQL StatefulSet for the voting database.
+#
+# Apply in this order (the password is generated at apply time, see secret.yaml):
+#
+#   POSTGRES_PASSWORD="$(openssl rand -base64 18)" envsubst < secret.yaml | oc apply -f -
+#   oc apply -f configmap.yaml -f init-configmap.yaml -f service.yaml
+#   oc apply -f statefulset.yaml
+#
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: voting-db
+  labels:
+    app: voting-db
+spec:
+  serviceName: voting-db
+  replicas: 1
+  selector:
+    matchLabels:
+      app: voting-db
+  template:
+    metadata:
+      labels:
+        app: voting-db
+    spec:
+      containers:
+      - name: db
+        image: image-registry.openshift-image-registry.svc:5000/openshift/postgres:15-alpine
+        ports:
+        - containerPort: 5432
+        env:
+        # Sensitive values, loaded from Secret
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: voting-db-secret
+              key: POSTGRES_USER
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: voting-db-secret
+              key: POSTGRES_PASSWORD
+        # Non-sensitive config, loaded from ConfigMap
+        - name: POSTGRES_DB
+          valueFrom:
+            configMapKeyRef:
+              name: voting-db-config
+              key: POSTGRES_DB
+        - name: PGDATA
+          valueFrom:
+            configMapKeyRef:
+              name: voting-db-config
+              key: PGDATA
+        # Ready only when it accepts TCP connections. During the first start the
+        # image runs a temporary server on the unix socket only (while it executes
+        # the init scripts), so checking 127.0.0.1 avoids reporting ready too early.
+        readinessProbe:
+          exec:
+            command:
+            - sh
+            - -c
+            - pg_isready -h 127.0.0.1 -U "$POSTGRES_USER" -d "$POSTGRES_DB"
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        resources:
+          requests:
+            cpu: 100m
+            memory: 256Mi
+          limits:
+            cpu: 500m
+            memory: 512Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop: ["ALL"]
+        volumeMounts:
+        - name: data
+          mountPath: /var/lib/postgresql/data
+        - name: init
+          mountPath: /docker-entrypoint-initdb.d
+          readOnly: true
+      volumes:
+      - name: init
+        configMap:
+          name: voting-db-init
+  volumeClaimTemplates:
+  - metadata:
+      name: data
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      storageClassName: gp3-csi
+      resources:
+        requests:
+          storage: 1Gi

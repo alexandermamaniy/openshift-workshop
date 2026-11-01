@@ -1,0 +1,74 @@
+# Voting API Deployment.
+#
+# The image is built inside the cluster (see README) and pushed to the internal
+# registry as the "voting-api" ImageStream. "oc set image-lookup" lets us refer to
+# it by name, so this file does not depend on the project name.
+#
+# Credentials and database name come from the Secret and ConfigMap created by the
+# database lab (voting-db-secret, voting-db-config).
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: voting-api
+  labels:
+    app: voting-api
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: voting-api
+  template:
+    metadata:
+      labels:
+        app: voting-api
+    spec:
+      containers:
+      - name: api
+        image: voting-api:latest
+        ports:
+        - containerPort: 8080
+        env:
+        # Sensitive values, loaded from Secret
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: voting-db-secret
+              key: POSTGRES_USER
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: voting-db-secret
+              key: POSTGRES_PASSWORD
+        # Non-sensitive config, loaded from ConfigMap
+        - name: POSTGRES_DB
+          valueFrom:
+            configMapKeyRef:
+              name: voting-db-config
+              key: POSTGRES_DB
+        # The headless Service of the database StatefulSet
+        - name: DB_HOST
+          value: voting-db
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 8080
+          initialDelaySeconds: 3
+          periodSeconds: 5
+        resources:
+          requests:
+            cpu: 50m
+            memory: 64Mi
+          limits:
+            cpu: 250m
+            memory: 128Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          runAsNonRoot: true
+          capabilities:
+            drop: ["ALL"]

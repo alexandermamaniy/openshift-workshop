@@ -1,0 +1,53 @@
+# Voting Web UI Deployment (nginx serving static files).
+#
+# The image is built inside the cluster (see README) and pushed to the internal
+# registry as the "voting-web-ui" ImageStream. "oc set image-lookup" lets us refer
+# to it by name, so this file does not depend on the project name.
+#
+# nginx resolves the "voting-api" Service name when it starts, so deploy the
+# backend REST API first.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: voting-web-ui
+  labels:
+    app: voting-web-ui
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: voting-web-ui
+  template:
+    metadata:
+      labels:
+        app: voting-web-ui
+    spec:
+      containers:
+      - name: web
+        image: voting-web-ui:latest
+        ports:
+        - containerPort: 8080
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds: 3
+          periodSeconds: 5
+        resources:
+          requests:
+            cpu: 50m
+            memory: 64Mi
+          limits:
+            cpu: 250m
+            memory: 128Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          runAsNonRoot: true
+          capabilities:
+            drop: ["ALL"]
