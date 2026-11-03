@@ -1,5 +1,5 @@
 
-# OpenShift Pipelines
+# CI/CD with OpenShift Pipelines (Optional)
 
 ## Prerequisites
 
