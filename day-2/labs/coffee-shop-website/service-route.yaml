@@ -1,0 +1,31 @@
+# Service and Route for the coffee shop website.
+apiVersion: v1
+kind: Service
+metadata:
+  name: coffee-shop-app
+  labels:
+    app: coffee-shop-app
+spec:
+  selector:
+    app: coffee-shop-app
+  ports:
+  - name: http
+    port: 8080
+    targetPort: 8080
+    protocol: TCP
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: coffee-shop-app
+  labels:
+    app: coffee-shop-app
+spec:
+  to:
+    kind: Service
+    name: coffee-shop-app
+  port:
+    targetPort: http
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect

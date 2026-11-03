@@ -53,7 +53,7 @@ voting-web-ui-hpa  Deployment/voting-web-ui     1%/50%          2         6
 ### 3. Build the stress image in the cluster
 
 ```bash
-cd day-2/voting-app/hpa
+cd day-2/labs/voting-app/04-horizontal-pod-autoscaling
 
 # Create the BuildConfig and ImageStream (once)
 oc new-build --name voting-stress --binary --strategy docker -n $NAMESPACE

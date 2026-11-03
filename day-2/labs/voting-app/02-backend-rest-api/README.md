@@ -80,7 +80,7 @@ CMD ["python", "server.py"]
 The internal registry address (`image-registry.openshift-image-registry.svc:5000`) only works **inside** the cluster, so you cannot push from your laptop. Let OpenShift build it:
 
 ```bash
-cd backend-rest-api
+cd day-2/labs/voting-app/02-backend-rest-api
 
 # Create a BuildConfig and an ImageStream (once)
 oc new-build --name voting-api --binary --strategy docker -n $NAMESPACE

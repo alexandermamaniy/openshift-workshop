@@ -89,7 +89,7 @@ location /api/ {
 ### 2. Build the image in the cluster
 
 ```bash
-cd frontend-web-ui
+cd day-2/labs/voting-app/03-frontend-web-ui
 
 # Create a BuildConfig and an ImageStream (once)
 oc new-build --name voting-web-ui --binary --strategy docker -n $NAMESPACE

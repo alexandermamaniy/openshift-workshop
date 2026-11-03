@@ -105,20 +105,14 @@ Always create the Secret and ConfigMaps **before** the StatefulSet, the pod will
 ```bash
 # POSTGRES_PASSWORD="$(openssl rand -base64 18)" envsubst < secret.yaml | oc apply -n $NAMESPACE -f -
 
+cd day-2/labs/voting-app/01-database
+
 oc apply -f configmap.yaml      -n $NAMESPACE
 oc apply -f secret.yaml      -n $NAMESPACE
 oc apply -f init-configmap.yaml -n $NAMESPACE
 oc apply -f service.yaml        -n $NAMESPACE
 oc apply -f statefulset.yaml    -n $NAMESPACE
 ```
-
-> No `envsubst` on your machine? Create the Secret with this command instead, and skip the first line above:
->
-> ```bash
-> oc create secret generic voting-db-secret -n $NAMESPACE \
->   --from-literal=POSTGRES_USER=voting \
->   --from-literal=POSTGRES_PASSWORD="$(openssl rand -base64 18)"
-> ```
 
 ---
 
