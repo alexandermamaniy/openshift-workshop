@@ -37,7 +37,7 @@ export NAMESPACE=$(oc whoami)-voting-app
 oc apply -f hpa-api.yaml    -n $NAMESPACE
 oc apply -f hpa-web-ui.yaml -n $NAMESPACE
 
-oc get hpa -n $NAMESPACE
+oc get hpa -n $NAMESPACE -w
 ```
 
 Expected output — both HPAs show `MINPODS` and `MAXPODS`:
