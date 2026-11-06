@@ -29,7 +29,8 @@ Browser --HTTPS--> Route --> Service coffee-shop-app --> Node.js pods
 ## Before continuing with the instructions, ensure you are logged in! Do this for every lab!!!
 ```bash
 ! crc start
-oc login -u developer -p developer https://api.crc.testing:6443```
+oc login -u developer -p developer https://api.crc.testing:6443
+```
 
 ### 0. Create the project and set the namespace variable
 
