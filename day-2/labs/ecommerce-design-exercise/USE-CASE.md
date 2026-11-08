@@ -24,6 +24,17 @@ An online store where customers can browse the catalog and place an order.
 3. The system charges the order through an **external payment provider**.
 4. If the payment is accepted, the system records the order and deducts the stock.
 
+## Application modules
+
+![E-Commerce Architecture Design](e-commerce-architecture-design.png)
+
+| Module | Purpose |
+|---|---|
+| **Frontend UI** | Web storefront accessed by users; routes requests to backend services |
+| **Catalog** | Handles product listings, descriptions, prices, and stock queries |
+| **Orders** | Handles order creation, customer checkout, and payment processing |
+| **Database** | Persistent storage for catalog data, inventory, and order records |
+
 ## What the system must guarantee
 
 | # | Quality |
