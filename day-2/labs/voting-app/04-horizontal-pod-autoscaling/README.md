@@ -109,11 +109,7 @@ You should see `REPLICAS` increase from 2 toward 8 as CPU crosses the 60% thresh
 | `API_URL` | `http://voting-api:8080` | API base URL |
 
 ```bash
-oc run seed-votes \
-  --image=voting-stress:latest \
-  --restart=Never --rm -it \
-  --env="NUM_VOTES=5000" \
-  --env="NUM_THREADS=100"
+oc run seed-votes --image=voting-stress:latest --restart=Never --rm -it --env="NUM_VOTES=5000" --env="NUM_THREADS=100"
 ```
 
 ---
