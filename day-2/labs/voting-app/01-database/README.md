@@ -148,9 +148,11 @@ oc get secret voting-db-secret -o yaml
 ```bash
 # Wait for the pod to be Running and Ready
 oc get pods -w
+```
 
+```bash 
 # Print the environment variables inside the container
-oc exec voting-db-0 -- env | grep POSTGRES
+oc exec voting-db-0 -- sh -c "env | grep POSTGRES"
 ```
 
 Expected output (the password is the random one you generated):
