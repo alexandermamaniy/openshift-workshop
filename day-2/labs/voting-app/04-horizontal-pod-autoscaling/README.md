@@ -87,11 +87,7 @@ oc set image-lookup voting-stress
 In one terminal, start the load:
 
 ```bash
-oc run seed-votes \
-  --image=voting-stress:latest \
-  --restart=Never --rm -it \
-  --env="NUM_VOTES=20000" \
-  --env="NUM_THREADS=50"
+oc run seed-votes --image=voting-stress:latest --restart=Never --rm -it --env="NUM_VOTES=20000" --env="NUM_THREADS=50"
 ```
 
 In a second terminal, watch the HPA scale up:
