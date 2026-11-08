@@ -34,9 +34,25 @@ oc login -u developer -p developer https://api.crc.testing:6443
 
 ### 0. Create the project and set the namespace variable
 
+**Linux / macOS:**
+
 ```bash
 export NAMESPACE=$(oc whoami)-coffee-shop-website
 oc new-project $NAMESPACE
+
+# Make sure to be at the right directory
+cd day-2/labs/coffee-shop-website
+```
+
+**Windows (PowerShell):**
+
+```powershell
+# Replace <username> with your username (e.g. developer)
+$env:NAMESPACE = "<username>-coffee-shop-website"
+oc new-project $env:NAMESPACE
+
+# Make sure to be at the right directory
+cd day-2\labs\coffee-shop-website
 ```
 
 ---
@@ -64,20 +80,18 @@ CMD ["npm", "start"]
 ### 2. Build the image in the cluster
 
 ```bash
-cd day-2/labs/coffee-shop-website
-
 # Create a BuildConfig and an ImageStream (once)
-oc new-build --name coffee-shop-app --binary --strategy docker -n $NAMESPACE
+oc new-build --name coffee-shop-app --binary --strategy docker
 
 # Upload this folder and build (the build log is streamed)
-oc start-build coffee-shop-app --from-dir=. --follow -n $NAMESPACE
+oc start-build coffee-shop-app --from-dir=. --follow
 ```
 
 The log ends with `Push successful`. Check the image and let the Deployment refer to it by its short name:
 
 ```bash
-oc get imagestream/coffee-shop-app -n $NAMESPACE
-oc set image-lookup coffee-shop-app -n $NAMESPACE
+oc get imagestream/coffee-shop-app
+oc set image-lookup coffee-shop-app
 ```
 
 ---
@@ -87,14 +101,14 @@ oc set image-lookup coffee-shop-app -n $NAMESPACE
 The Deployment refers to the image by its short name (`coffee-shop-app:latest`), which `oc set image-lookup` resolved in the previous step.
 
 ```bash
-oc apply -f deployment.yaml    -n $NAMESPACE
-oc apply -f service-route.yaml -n $NAMESPACE
+oc apply -f deployment.yaml
+oc apply -f service-route.yaml
 ```
 
 Label this first deployment as `v1`. The label is stored in the Deployment's revision history (you will use it in step 7):
 
 ```bash
-oc annotate deployment/coffee-shop-app kubernetes.io/change-cause="v1 - first deploy" -n $NAMESPACE --overwrite
+oc annotate deployment/coffee-shop-app kubernetes.io/change-cause="v1 - first deploy" --overwrite
 ```
 
 ---
@@ -102,8 +116,8 @@ oc annotate deployment/coffee-shop-app kubernetes.io/change-cause="v1 - first de
 ### 4. Verify
 
 ```bash
-oc rollout status deployment/coffee-shop-app -n $NAMESPACE
-oc get deploy,pod,svc,route -l app=coffee-shop-app -n $NAMESPACE
+oc rollout status deployment/coffee-shop-app
+oc get deploy,pod,svc,route -l app=coffee-shop-app
 ```
 
 You should see pods `1/1 Running` and a Route with an HTTPS host name.
@@ -113,10 +127,10 @@ You should see pods `1/1 Running` and a Route with an HTTPS host name.
 ### 5. Open the app
 
 ```bash
-echo "https://$(oc get route coffee-shop-app -n $NAMESPACE -o jsonpath='{.spec.host}')"
+oc get route coffee-shop-app -o jsonpath='{.spec.host}'
 ```
 
-Open the URL in your browser.
+Copy the hostname and open it in your browser.
 
 ---
 
@@ -126,16 +140,16 @@ Edit any file in `src/`, then rebuild and redeploy:
 
 ```bash
 # 1. Build again (uploads the folder with your changes)
-oc start-build coffee-shop-app --from-dir=. --follow -n $NAMESPACE
+oc start-build coffee-shop-app --from-dir=. --follow
 
 # 2. Point the Deployment to the new image (triggers a rolling update)
-oc set image deployment/coffee-shop-app web=coffee-shop-app:latest -n $NAMESPACE
+oc set image deployment/coffee-shop-app web=coffee-shop-app:latest
 
 # 3. Wait for the new pods
-oc rollout status deployment/coffee-shop-app -n $NAMESPACE
+oc rollout status deployment/coffee-shop-app
 
 # 4. Label this revision (use v3, v4, ... for the next changes)
-oc annotate deployment/coffee-shop-app kubernetes.io/change-cause="v2 - describe your change" -n $NAMESPACE --overwrite
+oc annotate deployment/coffee-shop-app kubernetes.io/change-cause="v2 - describe your change" --overwrite
 ```
 
 > **Why annotate after the change?** The `kubernetes.io/change-cause` annotation is saved in the revision that is active when you set it. Run it right after `oc set image`, and use `--overwrite` because the annotation already exists from the previous version.
@@ -150,23 +164,23 @@ If the new version has a problem, go back to the previous one. Each `oc set imag
 
 ```bash
 # 1. List the revisions
-oc rollout history deployment/coffee-shop-app -n $NAMESPACE
+oc rollout history deployment/coffee-shop-app
 # REVISION  CHANGE-CAUSE
 # 1         v1 - first deploy
 # 2         v2 - describe your change
 
 # 2. Go back to the previous revision (rolling update, no downtime)
-oc rollout undo deployment/coffee-shop-app -n $NAMESPACE
+oc rollout undo deployment/coffee-shop-app
 
 # 3. Wait for the pods
-oc rollout status deployment/coffee-shop-app -n $NAMESPACE
+oc rollout status deployment/coffee-shop-app
 ```
 
 To go back to a specific revision instead of the previous one:
 
 ```bash
-# oc rollout history deployment/coffee-shop-app --revision=<REVISION_ID> -n $NAMESPACE
-# oc rollout undo deployment/coffee-shop-app --to-revision=<REVISION_ID> -n $NAMESPACE
+# oc rollout history deployment/coffee-shop-app --revision=<REVISION_ID>
+# oc rollout undo deployment/coffee-shop-app --to-revision=<REVISION_ID>
 ```
 
 Reload the page in your browser (`Ctrl+Shift+R`) to see the old version.
@@ -177,6 +191,14 @@ Reload the page in your browser (`Ctrl+Shift+R`) to see the old version.
 
 ### 8. Clean up
 
+**Linux / macOS:**
+
 ```bash
 oc delete project $NAMESPACE
+```
+
+**Windows (PowerShell):**
+
+```powershell
+oc delete project $env:NAMESPACE
 ```
