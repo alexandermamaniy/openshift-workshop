@@ -20,7 +20,7 @@ A landing page for a specialty coffee shop, served with Node.js + Express in a c
 
 [`voting-app`](voting-app/USE-CASE.md)
 
-A multi-tier online voting system for an election with thousands of voters. Read the business requirements first in [`USE-CASE.md`](voting-app/USE-CASE.md), then complete the four parts in order:
+A multi-tier online voting system for an election with thousands of voters. Read the business requirements first in [`USE-CASE.md`](voting-app/README.md), then complete the four parts in order:
 
 | Part | Lab | Description |
 |---|---|---|

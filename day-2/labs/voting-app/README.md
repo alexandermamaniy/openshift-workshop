@@ -83,3 +83,5 @@ For this example we accept these risks.
 ## Solution Architecture
 
 ![Voting App Architecture](voting-app-arch.png)
+
+
