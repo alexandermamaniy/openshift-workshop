@@ -26,10 +26,22 @@ A landing page for a specialty coffee shop, served with **Node.js + Express** in
 ---
 
 ## Lab steps
-## Before continuing with the instructions, ensure you are logged in! Do this for every lab!!!
+
+> **Important:** Ensure you are logged in to the cluster before starting this lab (repeat this for every lab if your session expires).
+
+1. Log in to the OpenShift Web Console with your assigned user credentials.
+2. In the top-right corner, click on your username and select **Copy login command**:
+
+![Log in to cluster](images/login.png)
+
+3. Click **Display Token** and copy the login command containing your temporary token:
+
+![Get temporary token](images/token.png)
+
+4. Paste and execute the command in your terminal:
+
 ```bash
-! crc start
-oc login -u developer -p developer https://api.crc.testing:6443
+oc login --token=<token-generated> --server=https://<api.fake-cluster.example.com>
 ```
 
 ### 0. Create the project and set the namespace variable
