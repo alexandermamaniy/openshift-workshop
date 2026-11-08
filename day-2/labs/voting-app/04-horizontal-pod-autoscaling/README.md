@@ -23,13 +23,27 @@ pod/seed-votes (ephemeral)
 
 ## Lab steps
 
-### 1. Set the namespace variable
+### 1. Set the project and navigate to the lab directory
+
+**Linux / macOS:**
 
 ```bash
 export NAMESPACE=$(oc whoami)-voting-app
+oc project $NAMESPACE
 
-# Make sure you are at the right directory
+# Make sure you are at this directory
 cd day-2/labs/voting-app/04-horizontal-pod-autoscaling
+```
+
+**Windows (PowerShell):**
+
+```powershell
+# Replace <username> with your username (e.g. developer)
+$env:NAMESPACE = "<username>-voting-app"
+oc project $env:NAMESPACE
+
+# Make sure you are at this directory
+cd day-2\labs\voting-app\04-horizontal-pod-autoscaling
 ```
 
 ---
@@ -37,10 +51,10 @@ cd day-2/labs/voting-app/04-horizontal-pod-autoscaling
 ### 2. Apply the HPAs
 
 ```bash
-oc apply -f hpa-api.yaml    -n $NAMESPACE
-oc apply -f hpa-web-ui.yaml -n $NAMESPACE
+oc apply -f hpa-api.yaml
+oc apply -f hpa-web-ui.yaml
 
-oc get hpa -n $NAMESPACE -w
+oc get hpa -w
 ```
 
 Expected output — both HPAs show `MINPODS` and `MAXPODS`:
@@ -56,15 +70,14 @@ voting-web-ui-hpa  Deployment/voting-web-ui     1%/50%          2         6
 ### 3. Build the stress image in the cluster
 
 ```bash
-
 # Create the BuildConfig and ImageStream (once)
-oc new-build --name voting-stress --binary --strategy docker -n $NAMESPACE
+oc new-build --name voting-stress --binary --strategy docker
 
 # Upload this folder and build
-oc start-build voting-stress --from-dir=. --follow -n $NAMESPACE
+oc start-build voting-stress --from-dir=. --follow
 
 # Enable local ImageStream resolution
-oc set image-lookup voting-stress -n $NAMESPACE
+oc set image-lookup voting-stress
 ```
 
 ---
@@ -77,7 +90,6 @@ In one terminal, start the load:
 oc run seed-votes \
   --image=voting-stress:latest \
   --restart=Never --rm -it \
-  -n $NAMESPACE \
   --env="NUM_VOTES=20000" \
   --env="NUM_THREADS=50"
 ```
@@ -85,7 +97,7 @@ oc run seed-votes \
 In a second terminal, watch the HPA scale up:
 
 ```bash
-watch -n 3 oc get hpa voting-api-hpa -n $NAMESPACE
+oc get hpa voting-api-hpa -w
 ```
 
 You should see `REPLICAS` increase from 2 toward 8 as CPU crosses the 60% threshold.
@@ -104,7 +116,6 @@ You should see `REPLICAS` increase from 2 toward 8 as CPU crosses the 60% thresh
 oc run seed-votes \
   --image=voting-stress:latest \
   --restart=Never --rm -it \
-  -n $NAMESPACE \
   --env="NUM_VOTES=5000" \
   --env="NUM_THREADS=100"
 ```
@@ -116,7 +127,23 @@ oc run seed-votes \
 After the pod finishes, the HPA waits 60 seconds (`stabilizationWindowSeconds`) before scaling down, removing one replica every 30 seconds.
 
 ```bash
-watch -n 5 oc get pods -n $NAMESPACE
+oc get pods -w
+```
+
+---
+
+### 7. Clean up
+
+**Linux / macOS:**
+
+```bash
+oc delete project $NAMESPACE
+```
+
+**Windows (PowerShell):**
+
+```powershell
+oc delete project $env:NAMESPACE
 ```
 
 ---

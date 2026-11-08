@@ -43,18 +43,32 @@ The browser only talks to nginx. nginx forwards every `/api/` request to the `vo
 
 ### 0. Use the voting-app project
 
+**Linux / macOS:**
+
 ```bash
 export NAMESPACE=$(oc whoami)-voting-app
+oc project $NAMESPACE
 
-# Make sure you are at the right directory
+# Make sure you are at this directory
 cd day-2/labs/voting-app/03-frontend-web-ui
+```
+
+**Windows (PowerShell):**
+
+```powershell
+# Replace <username> with your username (e.g. developer)
+$env:NAMESPACE = "<username>-voting-app"
+oc project $env:NAMESPACE
+
+# Make sure you are at this directory
+cd day-2\labs\voting-app\03-frontend-web-ui
 ```
 
 The Web UI calls the API by its Service name, so it must run in the **same project** as the database and the API (the project created in the database lab). Deploy the [database](../01-database/README.md) and the [backend REST API](../02-backend-rest-api/README.md) first, then come back here.
 
 ```bash
 # Verify the API is ready before continuing:
-oc get deployment/voting-api service/voting-api -n $NAMESPACE
+oc get deployment/voting-api service/voting-api
 ```
 
 > **Expected output:** both resources show as `Ready`. If you see `Error from server (NotFound)` it means the backend API has not been deployed yet — go to [02-backend-rest-api/README.md](../02-backend-rest-api/README.md) first and come back here once that step is done.
@@ -91,19 +105,18 @@ location /api/ {
 ### 2. Build the image in the cluster
 
 ```bash
-
 # Create a BuildConfig and an ImageStream (once)
-oc new-build --name voting-web-ui --binary --strategy docker -n $NAMESPACE
+oc new-build --name voting-web-ui --binary --strategy docker
 
 # Upload this folder and build (the build log is streamed)
-oc start-build voting-web-ui --from-dir=. --follow -n $NAMESPACE
+oc start-build voting-web-ui --from-dir=. --follow
 ```
 
 The log ends with `Push successful`. Check the image and let the Deployment refer to it by its short name:
 
 ```bash
-oc get imagestream/voting-web-ui -n $NAMESPACE
-oc set image-lookup voting-web-ui -n $NAMESPACE
+oc get imagestream/voting-web-ui
+oc set image-lookup voting-web-ui
 ```
 
 ---
@@ -111,8 +124,8 @@ oc set image-lookup voting-web-ui -n $NAMESPACE
 ### 3. Apply the resources
 
 ```bash
-oc apply -f deployment.yaml    -n $NAMESPACE
-oc apply -f service-route.yaml -n $NAMESPACE
+oc apply -f deployment.yaml
+oc apply -f service-route.yaml
 ```
 
 ---
@@ -120,8 +133,8 @@ oc apply -f service-route.yaml -n $NAMESPACE
 ### 4. Verify
 
 ```bash
-oc rollout status deployment/voting-web-ui -n $NAMESPACE
-oc get deploy,pod,svc,route -l app=voting-web-ui -n $NAMESPACE
+oc rollout status deployment/voting-web-ui
+oc get deploy,pod,svc,route -l app=voting-web-ui
 ```
 
 You should see 2 pods `1/1 Running` and a Route with an HTTPS host name.
@@ -130,13 +143,11 @@ You should see 2 pods `1/1 Running` and a Route with an HTTPS host name.
 
 ### 5. Open the app and vote
 
-Get the URL:
-
 ```bash
-echo "https://$(oc get route voting-web-ui -n $NAMESPACE -o jsonpath='{.spec.host}')"
+oc get route voting-web-ui -o jsonpath='{.spec.host}'
 ```
 
-Open it in your browser:
+Copy the hostname and open it in your browser:
 
 1. Type your name and choose a candidate.
 2. Click **Vote**. You see a confirmation and the results are updated.
@@ -149,9 +160,9 @@ Open it in your browser:
 The three layers are independent:
 
 ```bash
-oc scale deployment/voting-web-ui --replicas=3 -n $NAMESPACE
-oc scale deployment/voting-api    --replicas=4 -n $NAMESPACE
-oc get pods -n $NAMESPACE
+oc scale deployment/voting-web-ui --replicas=3
+oc scale deployment/voting-api    --replicas=4
+oc get pods
 ```
 
 The Route spreads the traffic across the Web UI pods, and each Web UI pod spreads it across the API pods.
@@ -164,13 +175,13 @@ Edit any file in this folder (for example the title in `index.html`), then rebui
 
 ```bash
 # 1. Build again (uploads the folder with your changes)
-oc start-build voting-web-ui --from-dir=. --follow -n $NAMESPACE
+oc start-build voting-web-ui --from-dir=. --follow
 
 # 2. Make the Deployment use the new image (this starts a rolling update)
-oc set image deployment/voting-web-ui web=voting-web-ui:latest -n $NAMESPACE
+oc set image deployment/voting-web-ui web=voting-web-ui:latest
 
 # 3. Wait for the new pods
-oc rollout status deployment/voting-web-ui -n $NAMESPACE
+oc rollout status deployment/voting-web-ui
 ```
 
 Reload the page in your browser (`Ctrl+Shift+R` to skip the browser cache) to see your changes.

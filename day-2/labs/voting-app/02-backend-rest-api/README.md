@@ -47,14 +47,31 @@ Any other HTTP method returns 405. Every response carries an `X-Pod-Name` header
 
 The API reads the Secret and ConfigMap of the database lab, so it must run in the **same project**. If you cleaned it up, repeat the database lab first.
 
+**Linux / macOS:**
+
 ```bash
 export NAMESPACE=$(oc whoami)-voting-app
+oc project $NAMESPACE
 
-# Make also sure to be at this directory
+# Make sure you are at this directory
 cd day-2/labs/voting-app/02-backend-rest-api
+```
 
-# let's confirm that Database is up
-oc get statefulset/voting-db secret/voting-db-secret configmap/voting-db-config -n $NAMESPACE
+**Windows (PowerShell):**
+
+```powershell
+# Replace <username> with your username (e.g. developer)
+$env:NAMESPACE = "<username>-voting-app"
+oc project $env:NAMESPACE
+
+# Make sure you are at this directory
+cd day-2\labs\voting-app\02-backend-rest-api
+```
+
+Confirm that the database is up:
+
+```bash
+oc get statefulset/voting-db secret/voting-db-secret configmap/voting-db-config
 ```
 
 ---
@@ -85,24 +102,23 @@ CMD ["python", "server.py"]
 The internal registry address (`image-registry.openshift-image-registry.svc:5000`) only works **inside** the cluster, so you cannot push from your laptop. Let OpenShift build it:
 
 ```bash
-
 # Create a BuildConfig and an ImageStream (once)
-oc new-build --name voting-api --binary --strategy docker -n $NAMESPACE
+oc new-build --name voting-api --binary --strategy docker
 
 # Upload this folder and build (the build log is streamed)
-oc start-build voting-api --from-dir=. --follow -n $NAMESPACE
+oc start-build voting-api --from-dir=. --follow
 ```
 
 The log ends with `Push successful`. Check the image:
 
 ```bash
-oc get imagestream/voting-api -n $NAMESPACE
+oc get imagestream/voting-api
 ```
 
 Let the Deployment refer to the image by its short name (`voting-api:latest`):
 
 ```bash
-oc set image-lookup voting-api -n $NAMESPACE
+oc set image-lookup voting-api
 ```
 
 ---
@@ -121,8 +137,8 @@ Open [`deployment.yaml`](deployment.yaml). Notice:
 ### 4. Apply the resources
 
 ```bash
-oc apply -f deployment.yaml -n $NAMESPACE
-oc apply -f service.yaml    -n $NAMESPACE
+oc apply -f deployment.yaml
+oc apply -f service.yaml
 ```
 
 ---
@@ -130,8 +146,8 @@ oc apply -f service.yaml    -n $NAMESPACE
 ### 5. Verify
 
 ```bash
-oc rollout status deployment/voting-api -n $NAMESPACE
-oc get deploy,pod,svc,endpoints -l app=voting-api -n $NAMESPACE
+oc rollout status deployment/voting-api
+oc get deploy,pod,svc,endpoints -l app=voting-api
 ```
 
 You should see 2 pods `1/1 Running` and two addresses in the Service endpoints.
@@ -143,11 +159,7 @@ You should see 2 pods `1/1 Running` and two addresses in the Service endpoints.
 The Service has no Route, so call it from a pod inside the project:
 
 ```bash
-POD=$(oc get pod -l app=voting-api -n $NAMESPACE -o name | head -1)
-
-oc exec $POD -n $NAMESPACE -- python -c "
-import urllib.request
-print(urllib.request.urlopen('http://voting-api:8080/api/candidates').read().decode())"
+oc exec deployment/voting-api -- python -c "import urllib.request; print(urllib.request.urlopen('http://voting-api:8080/api/candidates').read().decode())"
 ```
 
 Expected output:
@@ -161,7 +173,7 @@ Expected output:
 The server writes one JSON line per request. Voter names are never logged.
 
 ```bash
-oc logs -l app=voting-api --prefix --tail=5 -n $NAMESPACE
+oc logs -l app=voting-api --prefix --tail=5
 ```
 
 ---
@@ -171,6 +183,6 @@ oc logs -l app=voting-api --prefix --tail=5 -n $NAMESPACE
 The API holds no state, so scaling it is safe:
 
 ```bash
-oc scale deployment/voting-api --replicas=4 -n $NAMESPACE
-oc get pods -l app=voting-api -n $NAMESPACE
+oc scale deployment/voting-api --replicas=4
+oc get pods -l app=voting-api
 ```

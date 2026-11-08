@@ -39,21 +39,27 @@ The database creates its own tables and loads the candidates the first time it s
 
 ## Lab steps
 
-### 0. Set your namespace variable
+### 0. Create the project and set the namespace variable
+
+**Linux / macOS:**
 
 ```bash
 export NAMESPACE=$(oc whoami)-voting-app
+oc new-project $NAMESPACE
 
-# Make also sure to be at this directory
+# Make sure you are at this directory
 cd day-2/labs/voting-app/01-database
 ```
 
----
+**Windows (PowerShell):**
 
-### 1. Create the project
+```powershell
+# Replace <username> with your username (e.g. developer)
+$env:NAMESPACE = "<username>-voting-app"
+oc new-project $env:NAMESPACE
 
-```bash
-oc new-project $NAMESPACE
+# Make sure you are at this directory
+cd day-2\labs\voting-app\01-database
 ```
 
 ---
@@ -106,14 +112,14 @@ Open [`init-configmap.yaml`](init-configmap.yaml). The `01-init.sql` key holds t
 Always create the Secret and ConfigMaps **before** the StatefulSet, the pod will fail to start if the referenced resources do not exist.
 
 ```bash
-# POSTGRES_PASSWORD="$(openssl rand -base64 18)" envsubst < secret.yaml | oc apply -n $NAMESPACE -f -
+# POSTGRES_PASSWORD="$(openssl rand -base64 18)" envsubst < secret.yaml | oc apply -f -
 
 
-oc apply -f configmap.yaml      -n $NAMESPACE
-oc apply -f secret.yaml      -n $NAMESPACE
-oc apply -f init-configmap.yaml -n $NAMESPACE
-oc apply -f service.yaml        -n $NAMESPACE
-oc apply -f statefulset.yaml    -n $NAMESPACE
+oc apply -f configmap.yaml
+oc apply -f secret.yaml
+oc apply -f init-configmap.yaml
+oc apply -f service.yaml
+oc apply -f statefulset.yaml
 ```
 
 ---
@@ -121,10 +127,10 @@ oc apply -f statefulset.yaml    -n $NAMESPACE
 ### 5. Verify the resources were created
 
 ```bash
-oc get secret/voting-db-secret -n $NAMESPACE
-oc get configmap/voting-db-config configmap/voting-db-init -n $NAMESPACE
+oc get secret/voting-db-secret
+oc get configmap/voting-db-config configmap/voting-db-init
 
-oc get sts,pod,pvc,svc -n $NAMESPACE
+oc get sts,pod,pvc,svc
 ```
 
 Notice the PVC `data-voting-db-0`: the StatefulSet created it from `volumeClaimTemplates`, one per pod.
@@ -132,7 +138,7 @@ Notice the PVC `data-voting-db-0`: the StatefulSet created it from `volumeClaimT
 Inspect the Secret, notice the values are base64-encoded:
 
 ```bash
-oc get secret voting-db-secret -n $NAMESPACE -o yaml
+oc get secret voting-db-secret -o yaml
 ```
 
 ---
@@ -141,10 +147,10 @@ oc get secret voting-db-secret -n $NAMESPACE -o yaml
 
 ```bash
 # Wait for the pod to be Running and Ready
-oc get pods -n $NAMESPACE -w
+oc get pods -w
 
 # Print the environment variables inside the container
-oc exec voting-db-0 -n $NAMESPACE -- env | grep POSTGRES
+oc exec voting-db-0 -- env | grep POSTGRES
 ```
 
 Expected output (the password is the random one you generated):
@@ -159,7 +165,7 @@ POSTGRES_DB=voting
 ### 7. Connect to the database
 
 ```bash
-oc -n $NAMESPACE rsh voting-db-0
+oc rsh voting-db-0
 ```
 
 ```bash
@@ -222,14 +228,14 @@ exit
 ### 9. Check that the data survives a pod restart
 
 ```bash
-oc delete pod voting-db-0 -n $NAMESPACE
-oc get pods -n $NAMESPACE -w
+oc delete pod voting-db-0
+oc get pods -w
 ```
 
 The StatefulSet recreates the pod with the **same name** and mounts the **same PVC**. Check that the vote is still there:
 
 ```bash
-oc exec voting-db-0 -n $NAMESPACE -- psql -U voting -d voting -c "SELECT voter, candidate_id FROM vote;"
+oc exec voting-db-0 -- psql -U voting -d voting -c "SELECT voter, candidate_id FROM vote;"
 ```
 
 Expected output:
