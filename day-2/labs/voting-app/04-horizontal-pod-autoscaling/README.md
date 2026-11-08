@@ -27,6 +27,9 @@ pod/seed-votes (ephemeral)
 
 ```bash
 export NAMESPACE=$(oc whoami)-voting-app
+
+# Make sure you are at the right directory
+cd day-2/labs/voting-app/04-horizontal-pod-autoscaling
 ```
 
 ---
@@ -53,7 +56,6 @@ voting-web-ui-hpa  Deployment/voting-web-ui     1%/50%          2         6
 ### 3. Build the stress image in the cluster
 
 ```bash
-cd day-2/labs/voting-app/04-horizontal-pod-autoscaling
 
 # Create the BuildConfig and ImageStream (once)
 oc new-build --name voting-stress --binary --strategy docker -n $NAMESPACE

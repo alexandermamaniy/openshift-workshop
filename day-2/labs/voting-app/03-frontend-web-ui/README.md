@@ -45,6 +45,9 @@ The browser only talks to nginx. nginx forwards every `/api/` request to the `vo
 
 ```bash
 export NAMESPACE=$(oc whoami)-voting-app
+
+# Make sure you are at the right directory
+cd day-2/labs/voting-app/03-frontend-web-ui
 ```
 
 The Web UI calls the API by its Service name, so it must run in the **same project** as the database and the API (the project created in the database lab). Deploy the [database](../01-database/README.md) and the [backend REST API](../02-backend-rest-api/README.md) first, then come back here.
@@ -88,7 +91,6 @@ location /api/ {
 ### 2. Build the image in the cluster
 
 ```bash
-cd day-2/labs/voting-app/03-frontend-web-ui
 
 # Create a BuildConfig and an ImageStream (once)
 oc new-build --name voting-web-ui --binary --strategy docker -n $NAMESPACE
@@ -140,17 +142,6 @@ Open it in your browser:
 2. Click **Vote**. You see a confirmation and the results are updated.
 3. Vote again with the same name. The page shows `this voter has already voted`: the database rejected the duplicate.
 
-The footer shows the name of the API pod that answered the last request. Reload the page a few times and you will see it change between the API replicas.
-
-You can also test the same path from a terminal:
-
-```bash
-HOST=$(oc get route voting-web-ui -n $NAMESPACE -o jsonpath='{.spec.host}')
-curl -s https://$HOST/api/candidates
-curl -s "https://$HOST/api/vote?voter=ana&candidate_id=1"
-curl -s https://$HOST/api/results
-```
-
 ---
 
 ### 6. Scale each layer on its own
@@ -183,26 +174,3 @@ oc rollout status deployment/voting-web-ui -n $NAMESPACE
 ```
 
 Reload the page in your browser (`Ctrl+Shift+R` to skip the browser cache) to see your changes.
-
-> **Why not just `oc rollout restart`?** `oc set image-lookup` turns `voting-web-ui:latest` into the exact image digest (`...@sha256:...`) when the Deployment is created or changed. A new build moves the `latest` tag, but the Deployment keeps the old digest, so a restart creates new pods with the **same old image**. Running `oc set image ... :latest` resolves the tag again and rolls out the new build.
->
-> To check which image the pods run: `oc get pods -l app=voting-web-ui -n $NAMESPACE -o jsonpath='{.items[*].status.containerStatuses[0].imageID}'`
->
-> Do not rebuild only with `oc start-build` and expect the page to change: nothing happens to the running pods until you run step 2.
-
----
-
-### 8. Clean up
-
-Delete only the Web UI:
-
-```bash
-oc delete -f deployment.yaml -f service-route.yaml -n $NAMESPACE
-oc delete bc/voting-web-ui is/voting-web-ui -n $NAMESPACE
-```
-
-Or delete the whole app, including the API and the database:
-
-```bash
-oc delete project $NAMESPACE
-```

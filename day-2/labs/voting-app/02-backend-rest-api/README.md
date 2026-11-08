@@ -49,6 +49,11 @@ The API reads the Secret and ConfigMap of the database lab, so it must run in th
 
 ```bash
 export NAMESPACE=$(oc whoami)-voting-app
+
+# Make also sure to be at this directory
+cd day-2/labs/voting-app/02-backend-rest-api
+
+# let's confirm that Database is up
 oc get statefulset/voting-db secret/voting-db-secret configmap/voting-db-config -n $NAMESPACE
 ```
 
@@ -80,7 +85,6 @@ CMD ["python", "server.py"]
 The internal registry address (`image-registry.openshift-image-registry.svc:5000`) only works **inside** the cluster, so you cannot push from your laptop. Let OpenShift build it:
 
 ```bash
-cd day-2/labs/voting-app/02-backend-rest-api
 
 # Create a BuildConfig and an ImageStream (once)
 oc new-build --name voting-api --binary --strategy docker -n $NAMESPACE
@@ -150,37 +154,6 @@ Expected output:
 ```
 {"candidates": [{"id": 1, "name": "Candidate A"}, {"id": 2, "name": "Candidate B"}, {"id": 3, "name": "Blank vote"}]}
 ```
-
-Cast a vote for Candidate A (`candidate_id=1`) and read the results:
-
-```bash
-oc exec $POD -n $NAMESPACE -- python -c "
-import urllib.request
-print(urllib.request.urlopen('http://voting-api:8080/api/vote?voter=ana&candidate_id=1').read().decode())
-print(urllib.request.urlopen('http://voting-api:8080/api/results').read().decode())"
-```
-
-Expected output:
-```
-{"status": "voted", "voter": "ana", "candidate_id": 1}
-{"results": [{"candidate_id": 1, "name": "Candidate A", "votes": 1}, {"candidate_id": 3, "name": "Blank vote", "votes": 0}, {"candidate_id": 2, "name": "Candidate B", "votes": 0}], "total": 1}
-```
-
-Run the same command again: the voter `ana` already voted, so the API answers `409` and Python prints an `HTTP Error 409: Conflict` traceback. That is the database rejecting the duplicate, not a bug in the API.
-
-Or from your machine, with a temporary port-forward (in a second terminal run `oc port-forward svc/voting-api 8080:8080 -n $NAMESPACE`):
-
-```bash
-curl -s localhost:8080/api/candidates
-curl -s "localhost:8080/api/vote?voter=ana&candidate_id=1"   # 201
-curl -s "localhost:8080/api/vote?voter=ana&candidate_id=2"   # 409, already voted
-curl -s "localhost:8080/api/vote?voter=bob&candidate_id=99"  # 404, unknown candidate
-curl -s "localhost:8080/api/vote?voter=&candidate_id=1"      # 400, invalid voter
-curl -s localhost:8080/api/results
-```
-
-> `port-forward` talks to **one** pod. To see the load balancing, repeat the `oc exec` call above a few times and compare the logs of each replica (step 7).
-
 ---
 
 ### 7. Read the logs
@@ -200,46 +173,4 @@ The API holds no state, so scaling it is safe:
 ```bash
 oc scale deployment/voting-api --replicas=4 -n $NAMESPACE
 oc get pods -l app=voting-api -n $NAMESPACE
-```
-
-Repeat the duplicate vote from step 6: it is still rejected with 409, no matter which replica answers, because the unique constraint lives in the database.
-
----
-
-### 9. Change the code and redeploy (optional)
-
-Edit `server.py` (for example add a field to a response), then rebuild the image and point the Deployment to the new build:
-
-```bash
-# 1. Build again, from the backend-rest-api folder (uploads your changes)
-oc start-build voting-api --from-dir=. --follow -n $NAMESPACE
-
-# 2. Make the Deployment use the new image (this starts a rolling update)
-oc set image deployment/voting-api api=voting-api:latest -n $NAMESPACE
-
-# 3. Wait for the new pods
-oc rollout status deployment/voting-api -n $NAMESPACE
-```
-
-Call the API again (step 6) to see your change. During the update the Service only sends traffic to pods that are Ready, so the API keeps answering.
-
-> **Why not just `oc rollout restart`?** `oc set image-lookup` turns `voting-api:latest` into the exact image digest (`...@sha256:...`) when the Deployment is created or changed. A new build moves the `latest` tag, but the Deployment keeps the old digest, so a restart creates new pods with the **same old image**. Running `oc set image ... :latest` resolves the tag again and rolls out the new build.
->
-> To check which image the pods run: `oc get pods -l app=voting-api -n $NAMESPACE -o jsonpath='{.items[*].status.containerStatuses[0].imageID}'`
-
----
-
-### 10. Clean up
-
-Delete only the API and keep the database:
-
-```bash
-oc delete -f deployment.yaml -f service.yaml -n $NAMESPACE
-oc delete bc/voting-api is/voting-api -n $NAMESPACE
-```
-
-Or delete everything, including the database:
-
-```bash
-oc delete project $NAMESPACE
 ```

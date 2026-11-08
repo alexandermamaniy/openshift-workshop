@@ -43,6 +43,9 @@ The database creates its own tables and loads the candidates the first time it s
 
 ```bash
 export NAMESPACE=$(oc whoami)-voting-app
+
+# Make also sure to be at this directory
+cd day-2/labs/voting-app/01-database
 ```
 
 ---
@@ -105,7 +108,6 @@ Always create the Secret and ConfigMaps **before** the StatefulSet, the pod will
 ```bash
 # POSTGRES_PASSWORD="$(openssl rand -base64 18)" envsubst < secret.yaml | oc apply -n $NAMESPACE -f -
 
-cd day-2/labs/voting-app/01-database
 
 oc apply -f configmap.yaml      -n $NAMESPACE
 oc apply -f secret.yaml      -n $NAMESPACE
@@ -235,12 +237,4 @@ Expected output:
  voter | candidate_id
 -------+--------------
  ana   |            1
-```
-
----
-
-### 10. Clean up
-
-```bash
-oc delete project $NAMESPACE
 ```
