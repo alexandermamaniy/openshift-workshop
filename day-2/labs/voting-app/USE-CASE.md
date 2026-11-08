@@ -77,3 +77,9 @@ Because there is no login:
 - Two different people with the same name would be treated as one voter.
 
 For this example we accept these risks.
+
+
+
+## Solution Architecture
+
+![Voting App Architecture](voting-app-arch.png)

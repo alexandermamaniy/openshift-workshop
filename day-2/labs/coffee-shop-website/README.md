@@ -1,10 +1,10 @@
-# Cocold — Coffee Shop Website
+# Coffee Shop Website
 
 A landing page for a specialty coffee shop, served with **Node.js + Express** inside a Docker container.
 
-```
-Browser --HTTPS--> Route --> Service coffee-shop-app --> Node.js pods
-```
+## Architecture
+
+![Coffee Shop Architecture Design](coffee-shop-arch-design.png)
 
 ---
 
