@@ -1,60 +1,58 @@
-# TiendaYa: Requisitos de negocio
+# E-Commerce App: Business Requirements
 
-> **Dinámica para los alumnos.** Lee este documento como si fueras el equipo de arquitectura al que el cliente le ha encargado el sistema. No hay una única respuesta correcta: lo importante es que puedas **justificar cada decisión con un requisito**.
+## The situation
 
-## La situación
+**E-Commerce App** is a clothing store with 500 products. Today it sells only in physical stores: orders are written down by hand and sometimes items that are already out of stock are sold.
 
-**TiendaYa** es una tienda de ropa con 500 productos. Hoy vende solo en tiendas físicas: los pedidos se apuntan a mano y a veces se vende lo que ya no hay en stock.
+The company wants to sell online. Every year it runs a **Black Friday** event where it expects **20 times more visits** than on a normal day.
 
-La empresa quiere vender por internet. Cada año hace un evento de **Black Friday** en el que espera **20 veces más visitas** que un día normal.
+## What the company needs
 
-## Qué necesita la empresa
+An online store where customers can browse the catalog and place an order.
 
-Una tienda online donde los clientes miren el catálogo y hagan un pedido.
+## Who uses it
 
-## Quién lo usa
-
-| Quién | Qué hace |
+| Who | What they do |
 |---|---|
-| **Visitante** | Mira el catálogo |
-| **Cliente** | Hace un pedido y lo paga |
+| **Visitor** | Browses the catalog |
+| **Customer** | Places an order and pays for it |
 
-## Cómo funciona
+## How it works
 
-1. El visitante abre la tienda y ve el catálogo con precios y stock.
-2. Elige productos y escribe sus datos de envío.
-3. El sistema cobra el pedido a través de un **proveedor de pagos externo**.
-4. Si el pago es aceptado, el sistema registra el pedido y descuenta el stock.
+1. The visitor opens the store and sees the catalog with prices and stock.
+2. They choose products and enter their shipping details.
+3. The system charges the order through an **external payment provider**.
+4. If the payment is accepted, the system records the order and deducts the stock.
 
-## Qué debe garantizar el sistema
+## What the system must guarantee
 
-| # | Calidad |
+| # | Quality |
 |---|---|
-| RN1 | **Ningún pedido se pierde**, aunque una parte del sistema falle o se reinicie. |
-| RN2 | Hay unas **100 visitas al catálogo por cada compra**. Mirar el catálogo no puede ralentizar las compras. |
-| RN3 | En Black Friday el sistema debe **aguantar 20 veces el tráfico normal** sin intervención manual. |
-| RN4 | La **clave del proveedor de pagos** y las credenciales no pueden aparecer en el código ni en los logs. |
-| RN5 | Si el proveedor de pagos falla, **el catálogo debe seguir funcionando**. |
-| RN6 | Los clientes solo deben llegar a la tienda. **La base de datos nunca debe ser accesible desde fuera.** |
+| RN1 | **No order is lost**, even if part of the system fails or restarts. |
+| RN2 | There are about **100 catalog visits for every purchase**. Browsing the catalog must not slow down purchases. |
+| RN3 | On Black Friday the system must **handle 20 times normal traffic** without manual intervention. |
+| RN4 | The **payment provider key** and credentials must not appear in the code or in logs. |
+| RN5 | If the payment provider fails, **the catalog must continue working**. |
+| RN6 | Customers should only access the storefront. **The database must never be accessible from the outside.** |
 
-## Qué tienes que entregar
+## What you need to deliver
 
-Un diagrama de arquitectura en OpenShift que incluya:
+An OpenShift architecture diagram that includes:
 
-1. Los **componentes** de la aplicación.
-2. Qué recurso de OpenShift usas para cada uno, y **por qué**.
-3. Cómo se comunican entre sí.
-4. Dónde se guardan los datos y la configuración.
-5. Qué es público y qué es interno.
-6. Qué ocurre en Black Friday.
+1. The application **components**.
+2. Which OpenShift resource you use for each, and **why**.
+3. How they communicate with each other.
+4. Where data and configuration are stored.
+5. What is public and what is internal.
+6. What happens on Black Friday.
 
-### Vocabulario
+### Vocabulary
 
 `Route` · `Service` · `Headless Service` · `Deployment` · `StatefulSet` · `Pod` · `ConfigMap` · `Secret` · `PVC` · `HPA`
 
-### Preguntas para justificar tu diseño
+### Questions to justify your design
 
-- ¿Qué componentes guardan estado y cuáles no?
-- ¿Qué parte debe escalar primero en Black Friday?
-- ¿Cómo evitas que alguien llegue a la base de datos desde internet?
-- ¿Dónde pones la clave del proveedor de pagos?
+- Which components are stateful and which are stateless?
+- Which part should scale first on Black Friday?
+- How do you prevent someone from accessing the database from the internet?
+- Where do you put the payment provider key?
